@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Science Careers & Scope</title>
+    <meta name="description" content="Data Science career roles & scope explorer featuring cinematic hero, interactive figurine carousel, and deep profile explorer." />
+    <meta property="og:title" content="Data Science Careers & Scope" />
+    <meta property="og:description" content="Data Science career roles & scope explorer featuring cinematic hero, interactive figurine carousel, and deep profile explorer." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script>
+      (function () {
+        try {
+          var target = typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : self);
+          if (target) {
+            var rawFetch = target.fetch;
+            var currentFetch = typeof rawFetch === 'function' ? rawFetch.bind(target) : rawFetch;
+
+            try {
+              Object.defineProperty(target, 'fetch', {
+                get: function () {
+                  return currentFetch;
+                },
+                set: function (fn) {
+                  currentFetch = fn;
+                },
+                configurable: true,
+                enumerable: true,
+              });
+            } catch (err) {
+              if (target.constructor && target.constructor.prototype) {
+                try {
+                  Object.defineProperty(target.constructor.prototype, 'fetch', {
+                    get: function () {
+                      return currentFetch;
+                    },
+                    set: function (fn) {
+                      currentFetch = fn;
+                    },
+                    configurable: true,
+                    enumerable: true,
+                  });
+                } catch (_) {}
+              }
+            }
+          }
+        } catch (_) {}
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
