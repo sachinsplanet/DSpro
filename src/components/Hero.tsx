@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowDown, Sparkles, Database, Cpu, TrendingUp, Lightbulb } from 'lucide-react';
+import { STUDENT_INFO } from '../data/content';
 
 interface HeroProps {
   cursorX: number;
@@ -30,7 +31,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
       title: 'Raw data',
       detail: 'Sensors, user logs, clinical EHR, financial transactions',
       icon: Database,
-      className: 'top-[10%] left-[2%] -rotate-6',
+      positionClass: 'top-1 sm:top-2 lg:top-3 left-1 sm:left-2 lg:left-3 -rotate-1 sm:-rotate-2',
     },
     {
       id: 2,
@@ -38,7 +39,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
       title: 'Machine learning',
       detail: 'Neural networks, regression trees, LLM embeddings',
       icon: Cpu,
-      className: 'top-[20%] right-[0%] rotate-6',
+      positionClass: 'top-1 sm:top-2 lg:top-3 right-1 sm:right-2 lg:right-3 rotate-1 sm:rotate-2',
     },
     {
       id: 3,
@@ -46,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
       title: 'Actionable insight',
       detail: 'Predictive risk scores, forecast graphs, decision matrices',
       icon: TrendingUp,
-      className: 'bottom-[12%] right-[4%] -rotate-3',
+      positionClass: 'bottom-1 sm:bottom-2 lg:bottom-3 right-1 sm:right-2 lg:right-3 -rotate-1 sm:-rotate-2',
     },
     {
       id: 4,
@@ -54,12 +55,12 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
       title: 'Real-world change',
       detail: 'Prevented failures, personalized therapies, optimized cities',
       icon: Lightbulb,
-      className: 'bottom-[18%] left-[2%] rotate-3',
+      positionClass: 'bottom-1 sm:bottom-2 lg:bottom-3 left-1 sm:left-2 lg:left-3 rotate-1 sm:rotate-2',
     },
   ];
 
   return (
-    <section id="top" className="relative min-h-[100svh] pt-32 md:pt-36 pb-16 px-4 md:px-8 overflow-hidden">
+    <section id="top" className="relative min-h-[100svh] pt-32 md:pt-36 pb-16 px-4 md:px-8 overflow-hidden bg-[#050d1a] text-[#f1efe8] w-full max-w-full">
       {/* Decorative angled background gradient lines */}
       <div
         className="absolute inset-0 pointer-events-none opacity-30"
@@ -133,7 +134,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
                 <span className="text-[#ff806d] font-medium">Scroll to enter data layer</span>
               </div>
               <div className="text-[11px] text-[#9b9da4]">
-                Presenter: <strong className="text-[#f1efe8]">Sachin Gupta</strong> (Roll: 1063)
+                Presenter: <strong className="text-[#f1efe8]">{STUDENT_INFO.name}</strong> · {STUDENT_INFO.classDivision} (Roll: {STUDENT_INFO.rollNo})
               </div>
             </div>
           </div>
@@ -141,7 +142,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
           {/* Right Hero Visual (Interactive 3D Stage) */}
           <div
             ref={containerRef}
-            className="relative w-full h-[28rem] sm:h-[34rem] lg:h-[38rem] perspective-[1200px] flex items-center justify-center select-none"
+            className="relative w-full max-w-[560px] mx-auto lg:max-w-none h-[30rem] sm:h-[35rem] lg:h-[38rem] perspective-[1200px] flex items-center justify-center select-none"
             aria-label="Interactive 3D Data Science visual model"
           >
             <div
@@ -153,7 +154,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
             >
               {/* Radial glow halo */}
               <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[22rem] sm:w-[28rem] aspect-square rounded-full pointer-events-none filter blur-2xl opacity-60"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20rem] sm:w-[26rem] aspect-square rounded-full pointer-events-none filter blur-2xl opacity-60"
                 style={{
                   background: 'radial-gradient(circle, rgba(215,255,84,0.18), rgba(168,231,249,0.06) 50%, transparent 70%)',
                   transform: 'translateZ(-40px)',
@@ -162,7 +163,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
 
               {/* 3D perspective floor grid */}
               <div
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-[36%] origin-bottom pointer-events-none opacity-40"
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[88%] h-[32%] origin-bottom pointer-events-none opacity-40"
                 style={{
                   transform: 'translateX(-50%) rotateX(66deg) translateZ(-30px)',
                   backgroundImage: `
@@ -178,7 +179,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
               <div
                 className="absolute top-1/2 left-1/2 w-[82%] aspect-square rounded-full border border-[rgba(215,255,84,0.38)] animate-orbit-spin pointer-events-none"
                 style={{
-                  transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(13deg) translateZ(45px)',
+                  transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(13deg) translateZ(35px)',
                   transformStyle: 'preserve-3d',
                 }}
               >
@@ -192,7 +193,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
               <div
                 className="absolute top-1/2 left-1/2 w-[70%] aspect-square rounded-full border border-[rgba(168,231,249,0.35)] animate-orbit-spin-reverse pointer-events-none"
                 style={{
-                  transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(-40deg) translateZ(70px)',
+                  transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(-40deg) translateZ(45px)',
                   transformStyle: 'preserve-3d',
                 }}
               >
@@ -206,7 +207,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
               <div
                 className="absolute top-1/2 left-1/2 w-[58%] aspect-square rounded-full border border-[rgba(255,128,109,0.35)] animate-orbit-spin-outer pointer-events-none"
                 style={{
-                  transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(78deg) translateZ(95px)',
+                  transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(78deg) translateZ(55px)',
                   transformStyle: 'preserve-3d',
                 }}
               >
@@ -218,9 +219,9 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
 
               {/* Core 3D Sphere */}
               <div
-                className="absolute top-1/2 left-1/2 w-[13rem] sm:w-[17rem] md:w-[19rem] aspect-square rounded-full border border-[rgba(215,255,84,0.7)] animate-core-float flex items-center justify-center text-center shadow-[0_0_0_1rem_rgba(215,255,84,0.03),0_0_70px_rgba(215,255,84,0.22),inset_-2rem_-2rem_4rem_rgba(0,0,0,0.75)]"
+                className="absolute top-1/2 left-1/2 w-[11rem] sm:w-[13.5rem] md:w-[15.5rem] aspect-square rounded-full border border-[rgba(215,255,84,0.7)] animate-core-float flex items-center justify-center text-center shadow-[0_0_0_1rem_rgba(215,255,84,0.03),0_0_70px_rgba(215,255,84,0.22),inset_-2rem_-2rem_4rem_rgba(0,0,0,0.75)]"
                 style={{
-                  transform: 'translate(-50%, -50%) translateZ(80px)',
+                  transform: 'translate(-50%, -50%) translateZ(40px)',
                   background: `
                     radial-gradient(circle at 33% 28%, rgba(255, 255, 255, 0.85), transparent 6%),
                     radial-gradient(circle at 67% 31%, rgba(168, 231, 249, 0.65), transparent 12%),
@@ -240,13 +241,13 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
                 />
 
                 {/* Core Label */}
-                <div className="relative z-10 font-mono-code text-xs sm:text-sm tracking-widest text-[#f1efe8] uppercase leading-relaxed px-4">
+                <div className="relative z-10 font-mono-code text-xs sm:text-sm tracking-widest text-[#f1efe8] uppercase leading-relaxed px-3 pointer-events-none">
                   <strong className="block text-[#d7ff54] text-base sm:text-lg tracking-wider font-semibold">
                     DATA
                   </strong>
                   <span>intelligence</span>
                   <br />
-                  <span className="text-[#9b9da4] text-[10px] sm:text-xs">in motion</span>
+                  <span className="text-[#9b9da4] text-[10px] sm:text-xs tracking-wider">in motion</span>
                 </div>
               </div>
 
@@ -261,28 +262,25 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
                     onMouseEnter={() => setActiveTag(tag.id)}
                     onMouseLeave={() => setActiveTag(null)}
                     onClick={() => setActiveTag(isSelected ? null : tag.id)}
-                    className={`absolute z-30 min-w-[7.5rem] sm:min-w-[9.5rem] p-2.5 sm:p-3 border rounded-sm transition-all duration-300 cursor-pointer backdrop-blur-md ${tag.className} ${
+                    className={`absolute z-30 w-[calc(50%-8px)] sm:w-[13.5rem] lg:w-[15.5rem] p-2.5 sm:p-3.5 border rounded-lg transition-all duration-300 cursor-pointer backdrop-blur-md ${tag.positionClass} ${
                       isSelected
-                        ? 'border-[#d7ff54] bg-[rgba(8,9,13,0.95)] shadow-[0_0_20px_rgba(215,255,84,0.35)] scale-105'
-                        : 'border-[rgba(241,239,232,0.2)] bg-[rgba(8,9,13,0.8)] shadow-lg hover:border-[#d7ff54]'
+                        ? 'border-[#d7ff54] bg-[rgba(8,9,13,0.96)] shadow-[0_0_20px_rgba(215,255,84,0.35)] scale-[1.02]'
+                        : 'border-[rgba(241,239,232,0.18)] bg-[rgba(8,9,13,0.85)] shadow-lg hover:border-[#d7ff54] hover:shadow-[0_0_15px_rgba(215,255,84,0.2)]'
                     }`}
-                    style={{ transformStyle: 'preserve-3d', transform: 'translateZ(110px)' }}
+                    style={{ transformStyle: 'preserve-3d', transform: 'translateZ(65px)' }}
                   >
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="font-mono-code text-[10px] uppercase text-[#d7ff54] tracking-wider">
+                    <div className="flex items-center justify-between gap-1.5 mb-1">
+                      <span className="font-mono-code text-[9px] sm:text-[10px] uppercase text-[#d7ff54] tracking-wider font-semibold">
                         {tag.code}
                       </span>
-                      <Icon className="w-3 h-3 text-[#d7ff54]" />
+                      <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#d7ff54] shrink-0" />
                     </div>
-                    <span className="block text-xs sm:text-sm font-medium text-[#f1efe8] mt-0.5">
+                    <span className="block text-xs sm:text-[13px] font-semibold text-[#f1efe8] leading-tight">
                       {tag.title}
                     </span>
-
-                    {isSelected && (
-                      <p className="mt-1 text-[11px] text-[#9b9da4] leading-tight border-t border-[rgba(241,239,232,0.1)] pt-1">
-                        {tag.detail}
-                      </p>
-                    )}
+                    <p className="mt-1.5 text-[10px] sm:text-[11px] text-[#9b9da4] leading-snug border-t border-[rgba(241,239,232,0.1)] pt-1.5 font-normal">
+                      {tag.detail}
+                    </p>
                   </div>
                 );
               })}

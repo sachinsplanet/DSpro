@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, ArrowRight, Compass, Sparkles, Database, Code2, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -13,6 +14,30 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({
   onClose,
   initialTopic = 'Begin Journey',
 }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll cleanly when modal is active, compensating scrollbar width
+  useEffect(() => {
+    if (!isOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -24,7 +49,7 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!mounted || !isOpen) return null;
 
   const contentMap: Record<
     string,
@@ -90,16 +115,16 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({
 
   const current = contentMap[initialTopic] || contentMap['Begin Journey'];
 
-  return (
+  return createPortal(
     <div
       id="journey-modal-backdrop"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[rgba(1,10,18,0.85)] backdrop-blur-md animate-fade-rise"
+      className="fixed inset-0 z-[9999] w-screen h-[100dvh] min-h-[100dvh] flex items-center justify-center p-4 bg-[rgba(1,10,18,0.85)] backdrop-blur-md animate-modal-backdrop overflow-y-auto"
       onClick={onClose}
     >
       <div
         id="journey-modal-dialog"
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-xl p-8 rounded-3xl liquid-glass bg-[rgba(3,18,32,0.95)] border border-[rgba(255,255,255,0.15)] shadow-2xl text-foreground"
+        className="relative w-full max-w-xl p-8 rounded-3xl liquid-glass bg-[rgba(3,18,32,0.95)] border border-[rgba(255,255,255,0.15)] shadow-2xl text-foreground animate-modal-card my-auto"
       >
         {/* Close Button */}
         <button
@@ -163,6 +188,7 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

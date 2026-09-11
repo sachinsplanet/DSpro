@@ -129,6 +129,20 @@ export default function App() {
     setRoleModalOpen(true);
   };
 
+  const handleNavigateRole = (direction: 'next' | 'prev') => {
+    if (!selectedRole) {
+      setSelectedRole(ROLES[0]);
+      return;
+    }
+    const currentIndex = ROLES.findIndex((r) => r.id === selectedRole.id);
+    const validIndex = currentIndex >= 0 ? currentIndex : 0;
+    const nextIndex =
+      direction === 'next'
+        ? (validIndex + 1) % ROLES.length
+        : (validIndex + ROLES.length - 1) % ROLES.length;
+    setSelectedRole(ROLES[nextIndex]);
+  };
+
   const scrollToExplorer = () => {
     const el = document.getElementById('top-interactive');
     if (el) {
@@ -137,7 +151,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-background text-foreground selection:bg-[#d7ff54] selection:text-[#08090d]">
+    <div className="relative w-full max-w-full min-h-screen bg-background text-foreground selection:bg-[#d7ff54] selection:text-[#08090d] overflow-x-hidden">
       {/* Top Scroll Progress Indicator */}
       <div
         id="scroll-progress-bar"
@@ -187,7 +201,7 @@ export default function App() {
       </section>
 
       {/* SECTION 2: 3D Interactive Data Model & Overview Hero */}
-      <div id="top-interactive">
+      <div id="top-interactive" className="relative w-full max-w-full overflow-hidden bg-[#050d1a]">
         <Hero cursorX={cursor.x} cursorY={cursor.y} />
       </div>
 
@@ -198,7 +212,10 @@ export default function App() {
       <WhyImportant />
 
       {/* SECTION 5: DSCE Career Role Carousel ("DSCE Career Explorer" 03 / The roles Showcase) */}
-      <DSCECareerCarousel onSelectRole={handleSelectRole} />
+      <DSCECareerCarousel
+        selectedRoleId={selectedRole?.id}
+        onSelectRole={handleSelectRole}
+      />
 
       {/* SECTION 6: Career Opportunities Directory & Competencies */}
       <CareerOpportunities onSelectRole={handleSelectRole} />
@@ -233,6 +250,7 @@ export default function App() {
         role={selectedRole}
         isOpen={roleModalOpen}
         onClose={() => setRoleModalOpen(false)}
+        onNavigate={handleNavigateRole}
       />
     </div>
   );

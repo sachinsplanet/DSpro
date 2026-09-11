@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
   };
 
   const handleCopyDetails = () => {
-    const text = `Student Presentation:\nName: ${STUDENT_INFO.name}\nClass: ${STUDENT_INFO.classDivision}\nRoll No.: ${STUDENT_INFO.rollNo}\nSubject: ${STUDENT_INFO.subject}`;
+    const text = `Student Presentation:\nName: ${STUDENT_INFO.name}\nClass / Division: ${STUDENT_INFO.classDivision}\nRoll No.: ${STUDENT_INFO.rollNo}\nProject Subject: ${STUDENT_INFO.subject}`;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
         .writeText(text)
@@ -123,7 +123,7 @@ export const Footer: React.FC = () => {
             <div className="p-5 rounded-sm border border-[rgba(241,239,232,0.15)] bg-[rgba(255,255,255,0.02)]">
               <div className="flex items-center gap-2 text-xs font-mono-code text-[#9b9da4] uppercase mb-1.5">
                 <BookOpen className="w-3.5 h-3.5 text-[#ffa76f]" />
-                <span>Academic Subject</span>
+                <span>Project Subject</span>
               </div>
               <strong className="text-lg sm:text-xl font-medium text-[#f1efe8]">
                 {STUDENT_INFO.subject}

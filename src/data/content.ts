@@ -2,7 +2,7 @@ import { CareerRole, Industry, FutureTrend, SkillItem, JourneyStage, StudentInfo
 
 export const STUDENT_INFO: StudentInfo = {
   name: 'Sachin Gupta',
-  classDivision: 'First-Year Data Science',
+  classDivision: 'F.Y Bsc Data Science',
   rollNo: '1063',
   subject: 'Data Science',
 };

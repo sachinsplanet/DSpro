@@ -1,15 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ROLES, Role } from '../data/rolesData';
+import { RoleExplorerModal } from './RoleExplorerModal';
 
 interface DSCECareerCarouselProps {
+  selectedRoleId?: string;
   onSelectRole?: (roleId: string) => void;
 }
 
-export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({ onSelectRole }) => {
+export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
+  selectedRoleId,
+  onSelectRole,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [internalModalOpen, setInternalModalOpen] = useState(false);
 
   // Text crossfade states: 300ms fade-out, text-swap, 350ms fade-in
   const [displayedTitle, setDisplayedTitle] = useState(ROLES[0].title);
@@ -20,6 +26,16 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({ onSelect
 
   const activeIndexRef = useRef(activeIndex);
   activeIndexRef.current = activeIndex;
+
+  // Sync carousel with externally selected role
+  useEffect(() => {
+    if (!selectedRoleId) return;
+    const foundIdx = ROLES.findIndex((r) => r.id === selectedRoleId);
+    if (foundIdx !== -1 && foundIdx !== activeIndexRef.current) {
+      setActiveIndex(foundIdx);
+      setDisplayedTitle(ROLES[foundIdx].title);
+    }
+  }, [selectedRoleId]);
 
   // Cleanup pending timeouts on unmount
   useEffect(() => {
@@ -77,6 +93,14 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({ onSelect
       setIsAnimating(false);
       animTimeoutRef.current = null;
     }, 650);
+  };
+
+  const handleOpenProfile = () => {
+    if (onSelectRole) {
+      onSelectRole(activeRole.id);
+    } else {
+      setInternalModalOpen(true);
+    }
   };
 
   // Keyboard navigation support (ArrowLeft / ArrowRight)
@@ -244,7 +268,9 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({ onSelect
                 onClick={() => {
                   if (idx === leftIndex) navigate('prev');
                   else if (idx === rightIndex) navigate('next');
+                  else if (idx === centerIndex) handleOpenProfile();
                 }}
+                title={idx === centerIndex ? `Click to inspect ${role.title} Career Profile` : role.title}
                 style={{
                   ...slotStyle,
                   aspectRatio: '0.6 / 1',
@@ -264,129 +290,94 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({ onSelect
           })}
         </div>
 
-        {/* 5. Bottom-left info panel (z-60) */}
+        {/* 5. Non-overlapping Centralized Bottom Controls Bar (z-30) */}
         <div
-          id="role-info-panel"
-          className="absolute bottom-6 left-4 sm:bottom-16 sm:left-24 z-[60] max-w-[360px]"
+          id="carousel-controls-bar"
+          className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-0 right-0 px-4 sm:px-8 md:px-14 lg:px-20 z-30 flex flex-row justify-between items-center pointer-events-none"
         >
-          {/* Eyebrow label */}
-          <p
-            id="role-eyebrow-label"
-            className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white opacity-70 mb-2"
-          >
-            CAREER PROFILE
-          </p>
-
-          {/* Role Name */}
-          <p
-            id="role-name-display"
-            className="font-bold uppercase text-lg sm:text-2xl text-white opacity-[0.98] mb-2"
-            style={{
-              opacity: titleFading ? 0 : 0.98,
-              transition: titleFading
-                ? 'opacity 300ms ease-out'
-                : 'opacity 350ms ease-in',
-            }}
-          >
-            {displayedTitle}
-          </p>
-
-          {/* Tagline (hidden on mobile) */}
-          <p
-            id="role-tagline"
-            className="hidden sm:block text-xs sm:text-sm text-white opacity-85 leading-[1.6] mb-3 font-normal"
-          >
-            {activeRole.tagline}
-          </p>
-
-          {/* Skills Row */}
+          {/* Left Navigation & Current Track Pill */}
           <div
-            id="role-skills-row"
-            className="flex flex-wrap gap-1.5 mb-2"
-            aria-label="Core Skills"
+            id="carousel-info-panel"
+            className="flex items-center space-x-2.5 sm:space-x-4 pointer-events-auto bg-black/50 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-white/15 shadow-xl"
           >
-            {activeRole.skills.map((skill, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 text-[10px] border border-white/40 rounded-sm text-white bg-white/10 select-none"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            {/* Circular Navigation Buttons */}
+            <div id="carousel-nav-controls" className="flex items-center space-x-1.5 sm:space-x-2">
+              <button
+                id="carousel-prev-btn"
+                type="button"
+                onClick={() => navigate('prev')}
+                disabled={isAnimating}
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/5 hover:bg-white/20 border border-white/30 hover:border-white flex items-center justify-center text-white cursor-pointer transition-all disabled:opacity-50 active:scale-95"
+                aria-label="Previous Career Role"
               >
-                {skill}
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.25} />
+              </button>
+              <button
+                id="carousel-next-btn"
+                type="button"
+                onClick={() => navigate('next')}
+                disabled={isAnimating}
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/5 hover:bg-white/20 border border-white/30 hover:border-white flex items-center justify-center text-white cursor-pointer transition-all disabled:opacity-50 active:scale-95"
+                aria-label="Next Career Role"
+              >
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.25} />
+              </button>
+            </div>
+
+            {/* Track indicator and current role label */}
+            <div className="flex items-center space-x-2 border-l border-white/20 pl-2.5 sm:pl-3.5">
+              <span className="text-[10px] sm:text-xs font-mono text-white/60 tracking-wider">
+                0{activeIndex + 1}&nbsp;/&nbsp;0{ROLES.length}
               </span>
-            ))}
+              <span
+                id="role-name-display"
+                className="text-xs sm:text-sm font-bold uppercase tracking-tight text-white whitespace-nowrap max-w-[130px] sm:max-w-[240px] truncate"
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  opacity: titleFading ? 0 : 1,
+                  transition: titleFading ? 'opacity 250ms ease-out' : 'opacity 300ms ease-in',
+                }}
+              >
+                {displayedTitle}
+              </span>
+            </div>
           </div>
 
-          {/* Tools Row */}
+          {/* Right CTA Button: Opens the Deep Career Profile Modal */}
           <div
-            id="role-tools-row"
-            className="flex flex-wrap gap-1.5 mb-4 sm:mb-5"
-            aria-label="Primary Tools"
+            id="explore-role-cta"
+            className="pointer-events-auto bg-black/50 backdrop-blur-md px-4 py-2 sm:px-6 sm:py-2.5 rounded-full border border-white/15 shadow-xl flex items-center"
           >
-            {activeRole.tools.map((tool, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 text-[10px] border border-white/40 rounded-sm text-white bg-white/10 select-none"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              >
-                {tool}
-              </span>
-            ))}
-          </div>
-
-          {/* Circular Navigation Buttons */}
-          <div id="carousel-nav-controls" className="flex items-center space-x-3">
             <button
-              id="carousel-prev-btn"
-              onClick={() => navigate('prev')}
-              disabled={isAnimating}
-              className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-transparent border-2 border-white flex items-center justify-center text-white cursor-pointer hover:scale-[1.08] hover:bg-white/12 transition-all duration-150 disabled:opacity-60"
-              aria-label="Previous Career Role"
+              id="explore-role-button"
+              type="button"
+              onClick={handleOpenProfile}
+              className="flex items-center space-x-1.5 sm:space-x-2 text-white hover:text-[#d7ff54] uppercase transition-colors duration-200 cursor-pointer group"
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 700,
+                fontSize: 'clamp(11px, 1.3vw, 15px)',
+                letterSpacing: '0.04em',
+              }}
             >
-              <ArrowLeft className="w-[26px] h-[26px]" strokeWidth={2.25} />
-            </button>
-            <button
-              id="carousel-next-btn"
-              onClick={() => navigate('next')}
-              disabled={isAnimating}
-              className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-transparent border-2 border-white flex items-center justify-center text-white cursor-pointer hover:scale-[1.08] hover:bg-white/12 transition-all duration-150 disabled:opacity-60"
-              aria-label="Next Career Role"
-            >
-              <ArrowRight className="w-[26px] h-[26px]" strokeWidth={2.25} />
+              <span>EXPLORE ROLE</span>
+              <ArrowRight
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform duration-150"
+                strokeWidth={2.25}
+              />
             </button>
           </div>
         </div>
 
-        {/* 6. Bottom-right CTA "EXPLORE ROLE" (z-60) */}
-        <div
-          id="explore-role-cta"
-          className="absolute bottom-6 right-4 sm:bottom-16 sm:right-10 z-[60]"
-        >
-          <button
-            id="explore-role-button"
-            onClick={() => {
-              if (onSelectRole) {
-                onSelectRole(activeRole.id);
-              }
-            }}
-            className="flex items-center space-x-2 text-white opacity-95 hover:opacity-100 uppercase transition-opacity duration-200 cursor-pointer group"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontWeight: 700,
-              fontSize: 'clamp(16px, 2.6vw, 34px)',
-              letterSpacing: '-0.01em',
-              lineHeight: 1,
-              textDecoration: 'none',
-            }}
-          >
-            <span className="group-hover:translate-x-0.5 transition-transform duration-150">
-              EXPLORE ROLE
-            </span>
-            <ArrowRight
-              className="w-5 h-5 sm:w-7 sm:h-7 group-hover:translate-x-1.5 transition-transform duration-150"
-              strokeWidth={2.25}
-            />
-          </button>
-        </div>
+        {/* Fallback Internal Modal when onSelectRole is not passed */}
+        {!onSelectRole && (
+          <RoleExplorerModal
+            role={activeRole}
+            isOpen={internalModalOpen}
+            onClose={() => setInternalModalOpen(false)}
+            onNavigate={(dir) => navigate(dir)}
+          />
+        )}
       </div>
     </section>
   );
