@@ -44,4 +44,5 @@ export interface StudentInfo {
   classDivision: string;
   rollNo: string;
   subject: string;
+  linkedin?: string;
 }

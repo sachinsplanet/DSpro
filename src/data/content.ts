@@ -5,6 +5,7 @@ export const STUDENT_INFO: StudentInfo = {
   classDivision: 'F.Y Bsc Data Science',
   rollNo: '1063',
   subject: 'Data Science',
+  linkedin: 'https://www.linkedin.com/in/proffesionalsachin/',
 };
 
 export const CORE_DEFINITION = {

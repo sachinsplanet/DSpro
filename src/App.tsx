@@ -60,7 +60,11 @@ export default function App() {
       return;
     }
     if (action === 'Begin Journey') {
-      return;
+      const topEl = document.getElementById('top-interactive');
+      if (topEl) {
+        topEl.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
     }
     if (action === 'Explore the field' || action === 'What') {
       const whatEl = document.getElementById('what');
@@ -163,7 +167,7 @@ export default function App() {
       {/* SECTION 1: Top Hero Section with Looping Video */}
       <section
         id="home"
-        className="relative min-h-screen w-full overflow-hidden flex flex-col justify-between"
+        className="relative min-h-screen w-full overflow-hidden flex flex-col justify-between bg-gradient-to-b from-[#050d1a] via-[#09152a] to-[#050d1a]"
       >
         {/* Fullscreen Looping Background Video */}
         <video
