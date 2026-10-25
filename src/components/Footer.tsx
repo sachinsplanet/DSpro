@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { STUDENT_INFO } from '../data/content';
-import { ArrowUp, Copy, Check, User, GraduationCap, Hash, BookOpen, Linkedin } from 'lucide-react';
+import { ArrowUp, Copy, Check, User, BookOpen, Linkedin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -24,7 +24,9 @@ export const Footer: React.FC = () => {
   };
 
   const handleCopyDetails = () => {
-    const text = `Student Presentation:\nName: ${STUDENT_INFO.name}\nLinkedIn: ${STUDENT_INFO.linkedin || 'https://www.linkedin.com/in/proffesionalsachin/'}\nClass / Division: ${STUDENT_INFO.classDivision}\nRoll No.: ${STUDENT_INFO.rollNo}\nProject Subject: ${STUDENT_INFO.subject}`;
+    const text = `Student Presentation:\nName: ${STUDENT_INFO.name}\nLinkedIn: ${
+      STUDENT_INFO.linkedin || 'https://www.linkedin.com/in/proffesionalsachin/'
+    }\nProject Subject: ${STUDENT_INFO.subject}`;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
         .writeText(text)
@@ -45,42 +47,45 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer id="details" className="pt-24 pb-12 px-4 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.15)]">
+    <footer
+      id="details"
+      className="pt-16 sm:pt-20 md:pt-24 pb-10 sm:pb-12 px-4 sm:px-6 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.15)]"
+    >
       <div className="w-full max-w-[1140px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 sm:gap-12 lg:gap-16 items-start">
           {/* Left Title */}
           <div>
             <p className="text-xs font-mono-code text-[#d7ff54] tracking-widest uppercase mb-3">
               09 / Student details
             </p>
 
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-medium tracking-tight leading-[0.82] max-w-[10ch]">
+            <h2 className="text-3xl min-[400px]:text-4xl sm:text-6xl md:text-7xl font-medium tracking-tight leading-[0.88] max-w-[10ch] [text-wrap:balance]">
               Keep asking better{' '}
               <em className="font-serif-display italic font-normal text-[#d7ff54]">
                 questions.
               </em>
             </h2>
 
-            <p className="mt-6 text-sm text-[#9b9da4] leading-relaxed max-w-md">
+            <p className="mt-4 sm:mt-6 text-sm text-[#9b9da4] leading-relaxed max-w-md">
               A comprehensive academic exploration of data science careers, algorithmic toolkits,
               and strategic trends across contemporary industry.
             </p>
 
-            <div className="mt-8 flex items-center gap-3">
+            <div className="mt-6 sm:mt-8 flex items-center gap-3">
               <button
                 type="button"
                 id="copy-student-details-btn"
                 onClick={handleCopyDetails}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[rgba(215,255,84,0.35)] text-xs font-mono-code uppercase text-[#d7ff54] hover:bg-[#d7ff54] hover:text-[#08090d] transition-all shadow-[0_0_15px_rgba(215,255,84,0.15)]"
+                className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[rgba(215,255,84,0.35)] text-xs font-mono-code uppercase text-[#d7ff54] hover:bg-[#d7ff54] hover:text-[#08090d] transition-all shadow-[0_0_15px_rgba(215,255,84,0.15)] cursor-pointer"
               >
                 {copied ? (
                   <>
-                    <Check className="w-3.5 h-3.5" />
+                    <Check className="w-3.5 h-3.5 shrink-0" />
                     <span>Copied Details</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5" />
+                    <Copy className="w-3.5 h-3.5 shrink-0" />
                     <span>Copy Presenter Info</span>
                   </>
                 )}
@@ -89,10 +94,10 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Right Student Details Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-5 rounded-sm border border-[rgba(241,239,232,0.15)] bg-[rgba(255,255,255,0.02)]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
+            <div className="p-4 sm:p-5 rounded-sm border border-[rgba(241,239,232,0.15)] bg-[rgba(255,255,255,0.02)]">
               <div className="flex items-center gap-2 text-xs font-mono-code text-[#9b9da4] uppercase mb-1.5">
-                <User className="w-3.5 h-3.5 text-[#d7ff54]" />
+                <User className="w-3.5 h-3.5 text-[#d7ff54] shrink-0" />
                 <span>Student Name</span>
               </div>
               <div className="flex items-center gap-2.5 mt-1">
@@ -100,11 +105,11 @@ export const Footer: React.FC = () => {
                   href={STUDENT_INFO.linkedin || 'https://www.linkedin.com/in/proffesionalsachin/'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-[#0077b5]/20 text-[#0a66c2] hover:bg-[#0a66c2] hover:text-white border border-[#0077b5]/40 transition-all duration-200 group/icon shrink-0 shadow-sm"
+                  className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-[#0077b5]/20 text-[#0a66c2] hover:bg-[#0a66c2] hover:text-white border border-[#0077b5]/40 transition-all duration-200 group/icon shrink-0 shadow-sm"
                   title="View Sachin Gupta's LinkedIn Profile"
                   aria-label="View Sachin Gupta's LinkedIn Profile"
                 >
-                  <Linkedin className="w-3.5 h-3.5 transition-transform group-hover/icon:scale-110" />
+                  <Linkedin className="w-4 h-4 transition-transform group-hover/icon:scale-110" />
                 </a>
                 <a
                   href={STUDENT_INFO.linkedin || 'https://www.linkedin.com/in/proffesionalsachin/'}
@@ -117,32 +122,12 @@ export const Footer: React.FC = () => {
               </div>
             </div>
 
-            <div className="p-5 rounded-sm border border-[rgba(241,239,232,0.15)] bg-[rgba(255,255,255,0.02)]">
+            <div className="p-4 sm:p-5 rounded-sm border border-[rgba(241,239,232,0.15)] bg-[rgba(255,255,255,0.02)]">
               <div className="flex items-center gap-2 text-xs font-mono-code text-[#9b9da4] uppercase mb-1.5">
-                <GraduationCap className="w-3.5 h-3.5 text-[#a8e7f9]" />
-                <span>Class / Division</span>
-              </div>
-              <strong className="text-lg sm:text-xl font-medium text-[#f1efe8]">
-                {STUDENT_INFO.classDivision}
-              </strong>
-            </div>
-
-            <div className="p-5 rounded-sm border border-[rgba(241,239,232,0.15)] bg-[rgba(255,255,255,0.02)]">
-              <div className="flex items-center gap-2 text-xs font-mono-code text-[#9b9da4] uppercase mb-1.5">
-                <Hash className="w-3.5 h-3.5 text-[#ff806d]" />
-                <span>Roll Number</span>
-              </div>
-              <strong className="text-lg sm:text-xl font-mono-code font-bold text-[#d7ff54]">
-                {STUDENT_INFO.rollNo}
-              </strong>
-            </div>
-
-            <div className="p-5 rounded-sm border border-[rgba(241,239,232,0.15)] bg-[rgba(255,255,255,0.02)]">
-              <div className="flex items-center gap-2 text-xs font-mono-code text-[#9b9da4] uppercase mb-1.5">
-                <BookOpen className="w-3.5 h-3.5 text-[#ffa76f]" />
+                <BookOpen className="w-3.5 h-3.5 text-[#ffa76f] shrink-0" />
                 <span>Project Subject</span>
               </div>
-              <strong className="text-lg sm:text-xl font-medium text-[#f1efe8]">
+              <strong className="text-lg sm:text-xl font-medium text-[#f1efe8] block">
                 {STUDENT_INFO.subject}
               </strong>
             </div>
@@ -150,17 +135,17 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-20 pt-8 border-t border-[rgba(241,239,232,0.1)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono-code text-[#9b9da4] uppercase">
+        <div className="mt-14 sm:mt-20 pt-6 sm:pt-8 border-t border-[rgba(241,239,232,0.1)] flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left text-xs font-mono-code text-[#9b9da4] uppercase">
           <div>
             <span>Career Opportunities &amp; Future Scope of Data Science</span>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col min-[420px]:flex-row items-center gap-3 sm:gap-6">
             <span className="text-[#f1efe8] font-normal">Built from data, designed for humans.</span>
             <button
               type="button"
               onClick={scrollToTop}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(241,239,232,0.2)] text-[#f1efe8] hover:border-[#d7ff54] hover:text-[#d7ff54] transition-colors"
+              className="min-h-[38px] inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[rgba(241,239,232,0.2)] text-[#f1efe8] hover:border-[#d7ff54] hover:text-[#d7ff54] transition-colors cursor-pointer whitespace-nowrap"
               aria-label="Back to top"
             >
               <span>Back to Top</span>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { ROLES, Role } from '../data/rolesData';
+import { ROLES } from '../data/rolesData';
 import { RoleExplorerModal } from './RoleExplorerModal';
 
 interface DSCECareerCarouselProps {
@@ -8,13 +8,15 @@ interface DSCECareerCarouselProps {
   onSelectRole?: (roleId: string) => void;
 }
 
+type ViewportTier = 'mobile' | 'tablet' | 'desktop';
+
 export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
   selectedRoleId,
   onSelectRole,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [viewportTier, setViewportTier] = useState<ViewportTier>('desktop');
   const [internalModalOpen, setInternalModalOpen] = useState(false);
 
   // Text crossfade states: 300ms fade-out, text-swap, 350ms fade-in
@@ -23,6 +25,7 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
 
   const titleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const animTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const activeIndexRef = useRef(activeIndex);
   activeIndexRef.current = activeIndex;
@@ -53,13 +56,20 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
     });
   }, []);
 
-  // Screen width detection for mobile calculations (< 640px)
+  // 3-tier responsive breakpoint detection (mobile < 640px, tablet 640-1023px, desktop >= 1024px)
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 640);
+      const w = window.innerWidth;
+      if (w < 640) {
+        setViewportTier('mobile');
+      } else if (w < 1024) {
+        setViewportTier('tablet');
+      } else {
+        setViewportTier('desktop');
+      }
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -78,9 +88,7 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
 
     if (titleTimeoutRef.current) clearTimeout(titleTimeoutRef.current);
     titleTimeoutRef.current = setTimeout(() => {
-      // Swap text content at 300ms
       setDisplayedTitle(ROLES[nextIndex].title);
-      // Fade in new title over 350ms
       setTitleFading(false);
       titleTimeoutRef.current = null;
     }, 300);
@@ -100,6 +108,31 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
       onSelectRole(activeRole.id);
     } else {
       setInternalModalOpen(true);
+    }
+  };
+
+  // Touch swipe handlers for mobile & tablet figurine switching
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length !== 1) return;
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!touchStartRef.current || e.changedTouches.length === 0) return;
+    const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
+    touchStartRef.current = null;
+
+    // Trigger horizontal swipe if horizontal movement exceeds 36px and dominates vertical scroll
+    if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+      if (dx < 0) {
+        navigate('next');
+      } else {
+        navigate('prev');
+      }
     }
   };
 
@@ -134,6 +167,8 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
     "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23noise)' opacity='0.08'/></svg>";
 
   const activeRole = ROLES[activeIndex] || ROLES[0];
+  const isMobile = viewportTier === 'mobile';
+  const isTablet = viewportTier === 'tablet';
 
   return (
     <section
@@ -145,7 +180,11 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
         fontFamily: "'Inter', sans-serif",
       }}
     >
-      <div className="relative w-full h-screen overflow-hidden">
+      <div
+        className="relative w-full min-h-[540px] h-[92svh] sm:h-[96svh] lg:h-screen max-h-[1080px] overflow-hidden touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {/* 1. Grain overlay (z-50) */}
         <div
           id="grain-overlay"
@@ -158,21 +197,40 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
           aria-hidden="true"
         />
 
-        {/* 2. Giant ghost text — active role's title (z-2) */}
+        {/* 2. Top Header Bar: Brand label "03 / THE ROLES — DSCE" & interaction hint (z-60) */}
+        <div className="absolute top-4 sm:top-6 left-4 right-4 sm:left-8 sm:right-8 z-[60] flex items-center justify-between gap-2 pointer-events-none">
+          <div
+            id="dsce-brand-label"
+            className="text-[11px] sm:text-xs font-semibold uppercase text-white/90 tracking-[0.16em]"
+          >
+            03 / THE ROLES · DSCE
+          </div>
+          <div className="text-[10px] sm:text-xs font-mono text-white/75 bg-black/25 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/15">
+            {isMobile || isTablet ? 'Swipe or tap arrows' : 'Use ← → keys or click figurines'}
+          </div>
+        </div>
+
+        {/* 3. Giant ghost text — active role's title (z-2) */}
         <div
           id="ghost-title-container"
-          className="absolute inset-x-0 flex items-center justify-center pointer-events-none select-none z-[2]"
-          style={{ top: '18%' }}
+          className="absolute inset-x-0 flex flex-col items-center justify-center pointer-events-none select-none z-[2] px-4"
+          style={{
+            top: isMobile ? '11%' : isTablet ? '14%' : '17%',
+          }}
           aria-hidden="true"
         >
           <h2
             id="ghost-role-title"
-            className="font-black text-white uppercase text-center max-w-[90vw]"
+            className="font-black text-white uppercase text-center max-w-[94vw] sm:max-w-[90vw] [text-wrap:balance]"
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
               fontWeight: 900,
-              fontSize: 'clamp(50px, 9vw, 140px)',
-              lineHeight: 1.05,
+              fontSize: isMobile
+                ? 'clamp(28px, 7.8vw, 44px)'
+                : isTablet
+                ? 'clamp(42px, 7.2vw, 82px)'
+                : 'clamp(64px, 8.5vw, 136px)',
+              lineHeight: 1.02,
               letterSpacing: '-0.01em',
               whiteSpace: 'normal',
               opacity: titleFading ? 0 : 1,
@@ -185,69 +243,58 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
           </h2>
         </div>
 
-        {/* 3. Top-left brand label "DSCE" (z-60) */}
-        <div
-          id="dsce-brand-label"
-          className="absolute top-6 left-4 sm:left-8 z-[60] text-xs font-semibold uppercase text-white opacity-90 tracking-[0.18em]"
-        >
-          DSCE
-        </div>
-
         {/* 4. Carousel figurines (z-3) */}
         <div id="carousel-viewport" className="absolute inset-0 z-[3]">
           {ROLES.map((role, idx) => {
             let slotStyle: React.CSSProperties = {};
 
             if (idx === centerIndex) {
-              // center
               slotStyle = {
-                transform: `translateX(-50%) scale(${isMobile ? 1.25 : 1.68})`,
+                transform: `translateX(-50%) scale(${
+                  isMobile ? 1.18 : isTablet ? 1.42 : 1.65
+                })`,
                 filter: 'blur(0px)',
                 opacity: 1,
                 zIndex: 20,
                 left: '50%',
-                height: isMobile ? '60%' : '92%',
-                bottom: isMobile ? '22%' : 0,
+                height: isMobile ? '53%' : isTablet ? '68%' : '88%',
+                bottom: isMobile ? '25%' : isTablet ? '15%' : '2%',
                 pointerEvents: 'auto',
               };
             } else if (idx === leftIndex) {
-              // left
               slotStyle = {
                 transform: 'translateX(-50%) scale(1)',
                 filter: 'blur(2px)',
-                opacity: 0.85,
+                opacity: isMobile ? 0.72 : 0.85,
                 zIndex: 10,
-                left: isMobile ? '20%' : '30%',
-                height: isMobile ? '16%' : '28%',
-                bottom: isMobile ? '32%' : '12%',
+                left: isMobile ? '16%' : isTablet ? '24%' : '30%',
+                height: isMobile ? '17%' : isTablet ? '23%' : '28%',
+                bottom: isMobile ? '35%' : isTablet ? '20%' : '12%',
                 pointerEvents: 'auto',
               };
             } else if (idx === rightIndex) {
-              // right
               slotStyle = {
                 transform: 'translateX(-50%) scale(1)',
                 filter: 'blur(2px)',
-                opacity: 0.85,
+                opacity: isMobile ? 0.72 : 0.85,
                 zIndex: 10,
-                left: isMobile ? '80%' : '70%',
-                height: isMobile ? '16%' : '28%',
-                bottom: isMobile ? '32%' : '12%',
+                left: isMobile ? '84%' : isTablet ? '76%' : '70%',
+                height: isMobile ? '17%' : isTablet ? '23%' : '28%',
+                bottom: isMobile ? '35%' : isTablet ? '20%' : '12%',
                 pointerEvents: 'auto',
               };
             } else if (idx === backIndex) {
-              // back
               slotStyle = {
                 transform: 'translateX(-50%) scale(1)',
                 filter: 'blur(4px)',
-                opacity: 1,
+                opacity: isMobile ? 0.55 : 0.85,
                 zIndex: 5,
                 left: '50%',
-                height: isMobile ? '13%' : '22%',
-                bottom: isMobile ? '32%' : '12%',
+                height: isMobile ? '13%' : isTablet ? '18%' : '22%',
+                bottom: isMobile ? '37%' : isTablet ? '22%' : '12%',
                 pointerEvents: 'none',
               };
             } else {
-              // far (hidden, remaining 3 roles)
               slotStyle = {
                 transform: 'translateX(-50%) scale(1)',
                 filter: 'blur(4px)',
@@ -256,7 +303,7 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
                 zIndex: 0,
                 left: '50%',
                 height: isMobile ? '13%' : '22%',
-                bottom: isMobile ? '32%' : '12%',
+                bottom: isMobile ? '35%' : '12%',
               };
             }
 
@@ -270,7 +317,11 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
                   else if (idx === rightIndex) navigate('next');
                   else if (idx === centerIndex) handleOpenProfile();
                 }}
-                title={idx === centerIndex ? `Click to inspect ${role.title} Career Profile` : role.title}
+                title={
+                  idx === centerIndex
+                    ? `Click to inspect ${role.title} Career Profile`
+                    : role.title
+                }
                 style={{
                   ...slotStyle,
                   aspectRatio: '0.6 / 1',
@@ -290,24 +341,24 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
           })}
         </div>
 
-        {/* 5. Non-overlapping Centralized Bottom Controls Bar (z-30) */}
+        {/* 5. Stacked Non-Overlapping Bottom Controls Bar on Mobile, Split Row on Tablet/Desktop (z-30) */}
         <div
           id="carousel-controls-bar"
-          className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-0 right-0 px-4 sm:px-8 md:px-14 lg:px-20 z-30 flex flex-row justify-between items-center pointer-events-none"
+          className="absolute bottom-3 sm:bottom-6 md:bottom-8 left-0 right-0 px-3.5 sm:px-8 md:px-14 lg:px-20 z-30 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2.5 sm:gap-4 pointer-events-none"
         >
           {/* Left Navigation & Current Track Pill */}
           <div
             id="carousel-info-panel"
-            className="flex items-center space-x-2.5 sm:space-x-4 pointer-events-auto bg-black/50 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-white/15 shadow-xl"
+            className="flex items-center justify-between sm:justify-start space-x-2.5 sm:space-x-4 pointer-events-auto bg-black/55 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-2.5 rounded-full border border-white/20 shadow-xl min-w-0"
           >
             {/* Circular Navigation Buttons */}
-            <div id="carousel-nav-controls" className="flex items-center space-x-1.5 sm:space-x-2">
+            <div id="carousel-nav-controls" className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
               <button
                 id="carousel-prev-btn"
                 type="button"
                 onClick={() => navigate('prev')}
                 disabled={isAnimating}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/5 hover:bg-white/20 border border-white/30 hover:border-white flex items-center justify-center text-white cursor-pointer transition-all disabled:opacity-50 active:scale-95"
+                className="w-9 h-9 sm:w-10 sm:h-10 min-w-[36px] min-h-[36px] rounded-full bg-white/10 hover:bg-white/25 border border-white/30 hover:border-white flex items-center justify-center text-white cursor-pointer transition-all disabled:opacity-50 active:scale-95"
                 aria-label="Previous Career Role"
               >
                 <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.25} />
@@ -317,7 +368,7 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
                 type="button"
                 onClick={() => navigate('next')}
                 disabled={isAnimating}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/5 hover:bg-white/20 border border-white/30 hover:border-white flex items-center justify-center text-white cursor-pointer transition-all disabled:opacity-50 active:scale-95"
+                className="w-9 h-9 sm:w-10 sm:h-10 min-w-[36px] min-h-[36px] rounded-full bg-white/10 hover:bg-white/25 border border-white/30 hover:border-white flex items-center justify-center text-white cursor-pointer transition-all disabled:opacity-50 active:scale-95"
                 aria-label="Next Career Role"
               >
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.25} />
@@ -325,13 +376,13 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
             </div>
 
             {/* Track indicator and current role label */}
-            <div className="flex items-center space-x-2 border-l border-white/20 pl-2.5 sm:pl-3.5">
-              <span className="text-[10px] sm:text-xs font-mono text-white/60 tracking-wider">
-                0{activeIndex + 1}&nbsp;/&nbsp;0{ROLES.length}
+            <div className="flex items-center space-x-2 border-l border-white/20 pl-2.5 sm:pl-3.5 min-w-0 flex-1">
+              <span className="text-[11px] sm:text-xs font-mono text-white/70 tracking-wider shrink-0 tabular-nums">
+                0{activeIndex + 1}/0{ROLES.length}
               </span>
               <span
                 id="role-name-display"
-                className="text-xs sm:text-sm font-bold uppercase tracking-tight text-white whitespace-nowrap max-w-[130px] sm:max-w-[240px] truncate"
+                className="text-xs sm:text-sm font-bold uppercase tracking-tight text-white whitespace-nowrap truncate"
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
                   opacity: titleFading ? 0 : 1,
@@ -346,23 +397,23 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
           {/* Right CTA Button: Opens the Deep Career Profile Modal */}
           <div
             id="explore-role-cta"
-            className="pointer-events-auto bg-black/50 backdrop-blur-md px-4 py-2 sm:px-6 sm:py-2.5 rounded-full border border-white/15 shadow-xl flex items-center"
+            className="pointer-events-auto bg-black/55 backdrop-blur-md px-5 py-2.5 sm:px-6 sm:py-2.5 min-h-[44px] rounded-full border border-white/20 shadow-xl flex items-center justify-center shrink-0"
           >
             <button
               id="explore-role-button"
               type="button"
               onClick={handleOpenProfile}
-              className="flex items-center space-x-1.5 sm:space-x-2 text-white hover:text-[#d7ff54] uppercase transition-colors duration-200 cursor-pointer group"
+              className="w-full sm:w-auto flex items-center justify-center space-x-2 text-white hover:text-[#d7ff54] uppercase transition-colors duration-200 cursor-pointer group whitespace-nowrap"
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontWeight: 700,
-                fontSize: 'clamp(11px, 1.3vw, 15px)',
+                fontSize: 'clamp(12px, 1.3vw, 15px)',
                 letterSpacing: '0.04em',
               }}
             >
               <span>EXPLORE ROLE</span>
               <ArrowRight
-                className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform duration-150"
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-150 shrink-0"
                 strokeWidth={2.25}
               />
             </button>

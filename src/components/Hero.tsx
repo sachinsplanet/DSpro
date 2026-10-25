@@ -13,7 +13,6 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Calculate 3D tilt based on cursor coordinates relative to center
     const width = window.innerWidth || 1200;
     const height = window.innerHeight || 800;
     const normX = cursorX / width - 0.5;
@@ -31,7 +30,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
       title: 'Raw data',
       detail: 'Sensors, user logs, clinical EHR, financial transactions',
       icon: Database,
-      positionClass: 'top-1 sm:top-2 lg:top-3 left-1 sm:left-2 lg:left-3 -rotate-1 sm:-rotate-2',
+      positionClass: 'top-2 lg:top-3 left-2 lg:left-3 -rotate-1 sm:-rotate-2',
     },
     {
       id: 2,
@@ -39,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
       title: 'Machine learning',
       detail: 'Neural networks, regression trees, LLM embeddings',
       icon: Cpu,
-      positionClass: 'top-1 sm:top-2 lg:top-3 right-1 sm:right-2 lg:right-3 rotate-1 sm:rotate-2',
+      positionClass: 'top-2 lg:top-3 right-2 lg:right-3 rotate-1 sm:rotate-2',
     },
     {
       id: 3,
@@ -47,7 +46,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
       title: 'Actionable insight',
       detail: 'Predictive risk scores, forecast graphs, decision matrices',
       icon: TrendingUp,
-      positionClass: 'bottom-1 sm:bottom-2 lg:bottom-3 right-1 sm:right-2 lg:right-3 -rotate-1 sm:-rotate-2',
+      positionClass: 'bottom-2 lg:bottom-3 right-2 lg:right-3 -rotate-1 sm:-rotate-2',
     },
     {
       id: 4,
@@ -55,12 +54,15 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
       title: 'Real-world change',
       detail: 'Prevented failures, personalized therapies, optimized cities',
       icon: Lightbulb,
-      positionClass: 'bottom-1 sm:bottom-2 lg:bottom-3 left-1 sm:left-2 lg:left-3 rotate-1 sm:rotate-2',
+      positionClass: 'bottom-2 lg:bottom-3 left-2 lg:left-3 rotate-1 sm:rotate-2',
     },
   ];
 
   return (
-    <section id="top" className="relative min-h-[100svh] pt-32 md:pt-36 pb-16 px-4 md:px-8 overflow-hidden bg-[#050d1a] text-[#f1efe8] w-full max-w-full">
+    <section
+      id="top"
+      className="relative min-h-[100svh] pt-16 sm:pt-24 md:pt-32 pb-14 sm:pb-16 px-4 sm:px-6 md:px-8 overflow-hidden bg-[#050d1a] text-[#f1efe8] w-full max-w-full"
+    >
       {/* Decorative angled background gradient lines */}
       <div
         className="absolute inset-0 pointer-events-none opacity-30"
@@ -74,45 +76,45 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
       />
 
       <div className="relative w-full max-w-[1140px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] items-center gap-12 lg:gap-16 min-h-[calc(100svh-12rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] items-center gap-10 sm:gap-12 lg:gap-16 min-h-[calc(100svh-10rem)]">
           {/* Left Hero Copy */}
           <div className="flex flex-col justify-center">
-            <div className="inline-flex items-center gap-3 mb-5 text-[#d7ff54] font-mono-code text-xs tracking-widest uppercase">
-              <span className="w-10 h-[1px] bg-current"></span>
+            <div className="inline-flex items-center gap-3 mb-4 sm:mb-5 text-[#d7ff54] font-mono-code text-[11px] sm:text-xs tracking-widest uppercase">
+              <span className="w-8 sm:w-10 h-[1px] bg-current shrink-0"></span>
               <span>Career Opportunities / Future Scope</span>
             </div>
 
-            <h1 className="text-5xl sm:text-6xl md:text-7xl xl:text-[5.5rem] font-medium tracking-tight text-[#f1efe8] leading-[0.88] max-w-[12ch]">
+            <h2 className="text-4xl min-[400px]:text-5xl sm:text-6xl md:text-7xl xl:text-[5.25rem] font-medium tracking-tight text-[#f1efe8] leading-[0.9] max-w-[12ch] [text-wrap:balance]">
               Data{' '}
               <em className="font-serif-display font-normal text-[#d7ff54] tracking-normal italic">
                 Science
               </em>{' '}
               Futures
-            </h1>
+            </h2>
 
-            <p className="mt-7 text-lg md:text-xl xl:text-2xl text-[#f1efe8] font-normal leading-snug max-w-xl">
+            <p className="mt-5 sm:mt-7 text-base sm:text-lg md:text-xl xl:text-2xl text-[#f1efe8] font-normal leading-snug max-w-xl">
               Turning Data into Decisions, Insights &amp; Innovation
             </p>
 
-            <p className="mt-4 text-sm md:text-base text-[#9b9da4] leading-relaxed max-w-lg">
+            <p className="mt-3 sm:mt-4 text-sm md:text-base text-[#9b9da4] leading-relaxed max-w-lg">
               From raw numbers to real-world impact — explore how Data Science is reshaping careers,
               multitrillion-dollar industries, and the technological horizon.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3 mt-8">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mt-7 sm:mt-8">
               <a
                 id="hero-cta-explore"
                 href="#what"
-                className="inline-flex items-center justify-center min-h-[2.9rem] px-5 py-3 rounded-full border border-[#d7ff54] bg-[#d7ff54] text-[#08090d] font-mono-code text-xs font-semibold uppercase tracking-wider hover:bg-transparent hover:text-[#d7ff54] transition-all hover:-translate-y-0.5 shadow-[0_0_25px_rgba(215,255,84,0.25)]"
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full border border-[#d7ff54] bg-[#d7ff54] text-[#08090d] font-mono-code text-xs font-semibold uppercase tracking-wider hover:bg-transparent hover:text-[#d7ff54] transition-all hover:-translate-y-0.5 shadow-[0_0_25px_rgba(215,255,84,0.25)] whitespace-nowrap"
               >
                 <span>Explore the field</span>
               </a>
 
               <a
                 id="hero-cta-careers"
-                href="#careers"
-                className="inline-flex items-center justify-center min-h-[2.9rem] px-5 py-3 rounded-full border border-[rgba(241,239,232,0.25)] text-[#f1efe8] font-mono-code text-xs uppercase tracking-wider hover:border-[#d7ff54] hover:text-[#d7ff54] transition-all hover:-translate-y-0.5"
+                href="#dsce-career-explorer"
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full border border-[rgba(241,239,232,0.25)] text-[#f1efe8] font-mono-code text-xs uppercase tracking-wider hover:border-[#d7ff54] hover:text-[#d7ff54] transition-all hover:-translate-y-0.5 whitespace-nowrap"
               >
                 <span>View 7 key careers</span>
               </a>
@@ -120,168 +122,211 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
               <a
                 id="hero-cta-student"
                 href="#details"
-                className="inline-flex items-center gap-1.5 min-h-[2.9rem] px-4 py-3 rounded-full text-[#9b9da4] hover:text-[#f1efe8] font-mono-code text-xs uppercase transition-colors"
+                className="inline-flex items-center gap-1.5 min-h-[44px] px-3.5 py-2.5 rounded-full text-[#9b9da4] hover:text-[#f1efe8] font-mono-code text-xs uppercase transition-colors whitespace-nowrap"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#d7ff54]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#d7ff54] shrink-0" />
                 <span>Student Info</span>
               </a>
             </div>
 
             {/* Note & Quick Stats */}
-            <div className="mt-12 pt-6 border-t border-[rgba(241,239,232,0.1)] flex flex-wrap items-center gap-6 text-xs text-[#9b9da4] font-mono-code">
+            <div className="mt-8 sm:mt-12 pt-5 sm:pt-6 border-t border-[rgba(241,239,232,0.1)] flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-6 text-xs text-[#9b9da4] font-mono-code">
               <div className="flex items-center gap-2 text-xs">
-                <span className="w-6 h-[1px] bg-[#ff806d]"></span>
-                <span className="text-[#ff806d] font-medium">Scroll to enter data layer</span>
+                <span className="w-6 h-[1px] bg-[#ff806d] shrink-0"></span>
+                <span className="text-[#ff806d] font-medium">Interactive 3D Pipeline</span>
               </div>
-              <div className="text-[11px] text-[#9b9da4]">
-                Presenter: <strong className="text-[#f1efe8]">{STUDENT_INFO.name}</strong> · {STUDENT_INFO.classDivision} (Roll: {STUDENT_INFO.rollNo})
+              <div className="text-[11px] text-[#9b9da4] leading-relaxed">
+                Presenter: <strong className="text-[#f1efe8]">{STUDENT_INFO.name}</strong> ·{' '}
+                {STUDENT_INFO.classDivision} (Roll: {STUDENT_INFO.rollNo})
               </div>
             </div>
           </div>
 
-          {/* Right Hero Visual (Interactive 3D Stage) */}
-          <div
-            ref={containerRef}
-            className="relative w-full max-w-[560px] mx-auto lg:max-w-none h-[30rem] sm:h-[35rem] lg:h-[38rem] perspective-[1200px] flex items-center justify-center select-none"
-            aria-label="Interactive 3D Data Science visual model"
-          >
+          {/* Right Hero Visual (Interactive 3D Stage + Mobile Stacked Cards) */}
+          <div className="w-full max-w-[580px] mx-auto lg:max-w-none flex flex-col">
             <div
-              className="relative w-full h-full transform-style-3d transition-transform duration-700 ease-out"
-              style={{
-                transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-                transformStyle: 'preserve-3d',
-              }}
+              ref={containerRef}
+              className="relative w-full h-[19rem] min-[400px]:h-[21rem] sm:h-[34rem] lg:h-[38rem] perspective-[1200px] flex items-center justify-center select-none"
+              aria-label="Interactive 3D Data Science visual model"
             >
-              {/* Radial glow halo */}
               <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20rem] sm:w-[26rem] aspect-square rounded-full pointer-events-none filter blur-2xl opacity-60"
+                className="relative w-full h-full transform-style-3d transition-transform duration-700 ease-out"
                 style={{
-                  background: 'radial-gradient(circle, rgba(215,255,84,0.18), rgba(168,231,249,0.06) 50%, transparent 70%)',
-                  transform: 'translateZ(-40px)',
-                }}
-              />
-
-              {/* 3D perspective floor grid */}
-              <div
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[88%] h-[32%] origin-bottom pointer-events-none opacity-40"
-                style={{
-                  transform: 'translateX(-50%) rotateX(66deg) translateZ(-30px)',
-                  backgroundImage: `
-                    linear-gradient(rgba(215, 255, 84, 0.22) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(215, 255, 84, 0.22) 1px, transparent 1px)
-                  `,
-                  backgroundSize: '2.2rem 2.2rem',
-                  maskImage: 'linear-gradient(to top, black, transparent)',
-                }}
-              />
-
-              {/* Orbit Ring A (Coral bead) */}
-              <div
-                className="absolute top-1/2 left-1/2 w-[82%] aspect-square rounded-full border border-[rgba(215,255,84,0.38)] animate-orbit-spin pointer-events-none"
-                style={{
-                  transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(13deg) translateZ(35px)',
+                  transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
                   transformStyle: 'preserve-3d',
                 }}
               >
-                <span
-                  className="absolute top-1/2 left-0 w-2.5 h-2.5 rounded-full bg-[#ff806d] shadow-[0_0_15px_#ff806d]"
-                  aria-hidden="true"
-                />
-              </div>
-
-              {/* Orbit Ring B (Cyan bead) */}
-              <div
-                className="absolute top-1/2 left-1/2 w-[70%] aspect-square rounded-full border border-[rgba(168,231,249,0.35)] animate-orbit-spin-reverse pointer-events-none"
-                style={{
-                  transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(-40deg) translateZ(45px)',
-                  transformStyle: 'preserve-3d',
-                }}
-              >
-                <span
-                  className="absolute top-0 left-1/2 w-2.5 h-2.5 rounded-full bg-[#a8e7f9] shadow-[0_0_15px_#a8e7f9]"
-                  aria-hidden="true"
-                />
-              </div>
-
-              {/* Orbit Ring C (Acid bead) */}
-              <div
-                className="absolute top-1/2 left-1/2 w-[58%] aspect-square rounded-full border border-[rgba(255,128,109,0.35)] animate-orbit-spin-outer pointer-events-none"
-                style={{
-                  transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(78deg) translateZ(55px)',
-                  transformStyle: 'preserve-3d',
-                }}
-              >
-                <span
-                  className="absolute bottom-1/2 right-0 w-2.5 h-2.5 rounded-full bg-[#d7ff54] shadow-[0_0_15px_#d7ff54]"
-                  aria-hidden="true"
-                />
-              </div>
-
-              {/* Core 3D Sphere */}
-              <div
-                className="absolute top-1/2 left-1/2 w-[11rem] sm:w-[13.5rem] md:w-[15.5rem] aspect-square rounded-full border border-[rgba(215,255,84,0.7)] animate-core-float flex items-center justify-center text-center shadow-[0_0_0_1rem_rgba(215,255,84,0.03),0_0_70px_rgba(215,255,84,0.22),inset_-2rem_-2rem_4rem_rgba(0,0,0,0.75)]"
-                style={{
-                  transform: 'translate(-50%, -50%) translateZ(40px)',
-                  background: `
-                    radial-gradient(circle at 33% 28%, rgba(255, 255, 255, 0.85), transparent 6%),
-                    radial-gradient(circle at 67% 31%, rgba(168, 231, 249, 0.65), transparent 12%),
-                    radial-gradient(circle at 40% 70%, rgba(255, 128, 109, 0.5), transparent 20%),
-                    radial-gradient(circle at 50% 50%, #25351e 0%, #101510 48%, #07080b 74%)
-                  `,
-                }}
-              >
-                {/* Internal tilted gyroscopic rings */}
+                {/* Radial glow halo */}
                 <div
-                  className="absolute inset-[10%] rounded-full border border-[rgba(168,231,249,0.4)] pointer-events-none"
-                  style={{ transform: 'rotate(38deg) scaleY(0.34)' }}
-                />
-                <div
-                  className="absolute inset-[10%] rounded-full border border-[rgba(255,128,109,0.35)] pointer-events-none"
-                  style={{ transform: 'rotate(-46deg) scaleY(0.46)' }}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[16rem] sm:w-[26rem] aspect-square rounded-full pointer-events-none filter blur-2xl opacity-60"
+                  style={{
+                    background:
+                      'radial-gradient(circle, rgba(215,255,84,0.18), rgba(168,231,249,0.06) 50%, transparent 70%)',
+                    transform: 'translateZ(-40px)',
+                  }}
                 />
 
-                {/* Core Label */}
-                <div className="relative z-10 font-mono-code text-xs sm:text-sm tracking-widest text-[#f1efe8] uppercase leading-relaxed px-3 pointer-events-none">
-                  <strong className="block text-[#d7ff54] text-base sm:text-lg tracking-wider font-semibold">
-                    DATA
-                  </strong>
-                  <span>intelligence</span>
-                  <br />
-                  <span className="text-[#9b9da4] text-[10px] sm:text-xs tracking-wider">in motion</span>
+                {/* 3D perspective floor grid */}
+                <div
+                  className="absolute bottom-2 sm:bottom-6 left-1/2 -translate-x-1/2 w-[88%] h-[32%] origin-bottom pointer-events-none opacity-40"
+                  style={{
+                    transform: 'translateX(-50%) rotateX(66deg) translateZ(-30px)',
+                    backgroundImage: `
+                      linear-gradient(rgba(215, 255, 84, 0.22) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(215, 255, 84, 0.22) 1px, transparent 1px)
+                    `,
+                    backgroundSize: '2.2rem 2.2rem',
+                    maskImage: 'linear-gradient(to top, black, transparent)',
+                  }}
+                />
+
+                {/* Orbit Ring A (Coral bead) */}
+                <div
+                  className="absolute top-1/2 left-1/2 w-[78%] sm:w-[82%] max-w-[20rem] sm:max-w-none aspect-square rounded-full border border-[rgba(215,255,84,0.38)] animate-orbit-spin pointer-events-none"
+                  style={{
+                    transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(13deg) translateZ(35px)',
+                    transformStyle: 'preserve-3d',
+                  }}
+                >
+                  <span
+                    className="absolute top-1/2 left-0 w-2.5 h-2.5 rounded-full bg-[#ff806d] shadow-[0_0_15px_#ff806d]"
+                    aria-hidden="true"
+                  />
                 </div>
-              </div>
 
-              {/* Interactive Floating Data Pipeline Tags */}
+                {/* Orbit Ring B (Cyan bead) */}
+                <div
+                  className="absolute top-1/2 left-1/2 w-[66%] sm:w-[70%] max-w-[17rem] sm:max-w-none aspect-square rounded-full border border-[rgba(168,231,249,0.35)] animate-orbit-spin-reverse pointer-events-none"
+                  style={{
+                    transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(-40deg) translateZ(45px)',
+                    transformStyle: 'preserve-3d',
+                  }}
+                >
+                  <span
+                    className="absolute top-0 left-1/2 w-2.5 h-2.5 rounded-full bg-[#a8e7f9] shadow-[0_0_15px_#a8e7f9]"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                {/* Orbit Ring C (Acid bead) */}
+                <div
+                  className="absolute top-1/2 left-1/2 w-[54%] sm:w-[58%] max-w-[14rem] sm:max-w-none aspect-square rounded-full border border-[rgba(255,128,109,0.35)] animate-orbit-spin-outer pointer-events-none"
+                  style={{
+                    transform: 'translate(-50%, -50%) rotateX(69deg) rotateZ(78deg) translateZ(55px)',
+                    transformStyle: 'preserve-3d',
+                  }}
+                >
+                  <span
+                    className="absolute bottom-1/2 right-0 w-2.5 h-2.5 rounded-full bg-[#d7ff54] shadow-[0_0_15px_#d7ff54]"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                {/* Core 3D Sphere */}
+                <div
+                  className="absolute top-1/2 left-1/2 w-[10.5rem] min-[400px]:w-[11.5rem] sm:w-[13.5rem] md:w-[15.5rem] aspect-square rounded-full border border-[rgba(215,255,84,0.7)] animate-core-float flex items-center justify-center text-center shadow-[0_0_0_1rem_rgba(215,255,84,0.03),0_0_70px_rgba(215,255,84,0.22),inset_-2rem_-2rem_4rem_rgba(0,0,0,0.75)]"
+                  style={{
+                    transform: 'translate(-50%, -50%) translateZ(40px)',
+                    background: `
+                      radial-gradient(circle at 33% 28%, rgba(255, 255, 255, 0.85), transparent 6%),
+                      radial-gradient(circle at 67% 31%, rgba(168, 231, 249, 0.65), transparent 12%),
+                      radial-gradient(circle at 40% 70%, rgba(255, 128, 109, 0.5), transparent 20%),
+                      radial-gradient(circle at 50% 50%, #25351e 0%, #101510 48%, #07080b 74%)
+                    `,
+                  }}
+                >
+                  {/* Internal tilted gyroscopic rings */}
+                  <div
+                    className="absolute inset-[10%] rounded-full border border-[rgba(168,231,249,0.4)] pointer-events-none"
+                    style={{ transform: 'rotate(38deg) scaleY(0.34)' }}
+                  />
+                  <div
+                    className="absolute inset-[10%] rounded-full border border-[rgba(255,128,109,0.35)] pointer-events-none"
+                    style={{ transform: 'rotate(-46deg) scaleY(0.46)' }}
+                  />
+
+                  {/* Core Label */}
+                  <div className="relative z-10 font-mono-code text-xs sm:text-sm tracking-widest text-[#f1efe8] uppercase leading-relaxed px-3 pointer-events-none">
+                    <strong className="block text-[#d7ff54] text-base sm:text-lg tracking-wider font-semibold">
+                      DATA
+                    </strong>
+                    <span>intelligence</span>
+                    <br />
+                    <span className="text-[#9b9da4] text-[10px] sm:text-xs tracking-wider">
+                      in motion
+                    </span>
+                  </div>
+                </div>
+
+                {/* Tablet & Desktop (>= 640px) Floating 3D Data Pipeline Tags */}
+                {tags.map((tag) => {
+                  const isSelected = activeTag === tag.id;
+                  const Icon = tag.icon;
+                  return (
+                    <div
+                      key={tag.id}
+                      id={`hero-tag-${tag.id}`}
+                      onMouseEnter={() => setActiveTag(tag.id)}
+                      onMouseLeave={() => setActiveTag(null)}
+                      onClick={() => setActiveTag(isSelected ? null : tag.id)}
+                      className={`hidden sm:block absolute z-30 sm:w-[13rem] md:w-[14rem] lg:w-[15.5rem] p-3 lg:p-3.5 border rounded-lg transition-all duration-300 cursor-pointer backdrop-blur-md ${tag.positionClass} ${
+                        isSelected
+                          ? 'border-[#d7ff54] bg-[rgba(8,9,13,0.96)] shadow-[0_0_20px_rgba(215,255,84,0.35)] scale-[1.02]'
+                          : 'border-[rgba(241,239,232,0.18)] bg-[rgba(8,9,13,0.85)] shadow-lg hover:border-[#d7ff54] hover:shadow-[0_0_15px_rgba(215,255,84,0.2)]'
+                      }`}
+                      style={{ transformStyle: 'preserve-3d', transform: 'translateZ(65px)' }}
+                    >
+                      <div className="flex items-center justify-between gap-1.5 mb-1">
+                        <span className="font-mono-code text-[10px] uppercase text-[#d7ff54] tracking-wider font-semibold">
+                          {tag.code}
+                        </span>
+                        <Icon className="w-3.5 h-3.5 text-[#d7ff54] shrink-0" />
+                      </div>
+                      <span className="block text-[13px] font-semibold text-[#f1efe8] leading-tight">
+                        {tag.title}
+                      </span>
+                      <p className="mt-1.5 text-[11px] text-[#9b9da4] leading-snug border-t border-[rgba(241,239,232,0.1)] pt-1.5 font-normal">
+                        {tag.detail}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Mobile (< 640px) Cleanly Stacked Pipeline Cards Below 3D Orb */}
+            <div
+              id="hero-mobile-pipeline-grid"
+              className="grid grid-cols-1 min-[390px]:grid-cols-2 gap-2.5 mt-2 sm:hidden"
+            >
               {tags.map((tag) => {
                 const isSelected = activeTag === tag.id;
                 const Icon = tag.icon;
                 return (
-                  <div
+                  <button
                     key={tag.id}
-                    id={`hero-tag-${tag.id}`}
-                    onMouseEnter={() => setActiveTag(tag.id)}
-                    onMouseLeave={() => setActiveTag(null)}
+                    type="button"
                     onClick={() => setActiveTag(isSelected ? null : tag.id)}
-                    className={`absolute z-30 w-[calc(50%-8px)] sm:w-[13.5rem] lg:w-[15.5rem] p-2.5 sm:p-3.5 border rounded-lg transition-all duration-300 cursor-pointer backdrop-blur-md ${tag.positionClass} ${
+                    aria-pressed={isSelected}
+                    className={`text-left p-3.5 border rounded-lg transition-all duration-200 backdrop-blur-md cursor-pointer ${
                       isSelected
-                        ? 'border-[#d7ff54] bg-[rgba(8,9,13,0.96)] shadow-[0_0_20px_rgba(215,255,84,0.35)] scale-[1.02]'
-                        : 'border-[rgba(241,239,232,0.18)] bg-[rgba(8,9,13,0.85)] shadow-lg hover:border-[#d7ff54] hover:shadow-[0_0_15px_rgba(215,255,84,0.2)]'
+                        ? 'border-[#d7ff54] bg-[rgba(215,255,84,0.08)] shadow-[0_0_15px_rgba(215,255,84,0.2)]'
+                        : 'border-[rgba(241,239,232,0.16)] bg-[rgba(8,9,13,0.9)]'
                     }`}
-                    style={{ transformStyle: 'preserve-3d', transform: 'translateZ(65px)' }}
                   >
                     <div className="flex items-center justify-between gap-1.5 mb-1">
-                      <span className="font-mono-code text-[9px] sm:text-[10px] uppercase text-[#d7ff54] tracking-wider font-semibold">
+                      <span className="font-mono-code text-[10px] uppercase text-[#d7ff54] tracking-wider font-semibold">
                         {tag.code}
                       </span>
-                      <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#d7ff54] shrink-0" />
+                      <Icon className="w-3.5 h-3.5 text-[#d7ff54] shrink-0" />
                     </div>
-                    <span className="block text-xs sm:text-[13px] font-semibold text-[#f1efe8] leading-tight">
+                    <span className="block text-xs font-semibold text-[#f1efe8] leading-tight">
                       {tag.title}
                     </span>
-                    <p className="mt-1.5 text-[10px] sm:text-[11px] text-[#9b9da4] leading-snug border-t border-[rgba(241,239,232,0.1)] pt-1.5 font-normal">
+                    <p className="mt-1.5 text-[11px] text-[#9b9da4] leading-snug border-t border-[rgba(241,239,232,0.1)] pt-1.5 font-normal">
                       {tag.detail}
                     </p>
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -289,10 +334,10 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
         </div>
       </div>
 
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-8 sm:mt-10">
         <a
           href="#what"
-          className="w-10 h-10 rounded-full border border-[rgba(241,239,232,0.2)] grid place-items-center text-[#9b9da4] hover:text-[#d7ff54] hover:border-[#d7ff54] transition-colors"
+          className="w-11 h-11 rounded-full border border-[rgba(241,239,232,0.2)] grid place-items-center text-[#9b9da4] hover:text-[#d7ff54] hover:border-[#d7ff54] transition-colors"
           aria-label="Scroll to definition section"
         >
           <ArrowDown className="w-4 h-4 animate-bounce" />
