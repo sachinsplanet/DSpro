@@ -1,13 +1,14 @@
 import React from 'react';
 import { Quote } from 'lucide-react';
+import { RevealOnScroll } from './RevealOnScroll';
 
 export const ClosingQuote: React.FC = () => {
   return (
     <section
       id="quote"
-      className="py-16 sm:py-24 md:py-28 px-4 sm:px-6 md:px-8 bg-[#ff806d] text-[#08090d] flex items-center justify-center text-center"
+      className="scroll-mt-16 py-16 sm:py-24 md:py-28 px-4 sm:px-6 md:px-8 bg-[#ff806d] text-[#08090d] flex items-center justify-center text-center"
     >
-      <div className="w-full max-w-4xl mx-auto">
+      <RevealOnScroll className="w-full max-w-4xl mx-auto">
         <div className="inline-flex items-center gap-2 mb-5 sm:mb-6 font-mono-code text-xs uppercase tracking-widest text-[#08090d] opacity-70">
           <Quote className="w-4 h-4 shrink-0" />
           <span>08 / Closing thought</span>
@@ -20,7 +21,7 @@ export const ClosingQuote: React.FC = () => {
         <p className="mt-6 sm:mt-8 font-mono-code text-xs sm:text-sm uppercase tracking-widest text-[#08090d] opacity-75 max-w-lg mx-auto leading-relaxed">
           The value is not in the data alone — but in what you choose to do with it.
         </p>
-      </div>
+      </RevealOnScroll>
     </section>
   );
 };

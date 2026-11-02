@@ -136,8 +136,7 @@ export const Hero: React.FC<HeroProps> = ({ cursorX, cursorY }) => {
                 <span className="text-[#ff806d] font-medium">Interactive 3D Pipeline</span>
               </div>
               <div className="text-[11px] text-[#9b9da4] leading-relaxed">
-                Presenter: <strong className="text-[#f1efe8]">{STUDENT_INFO.name}</strong> ·{' '}
-                {STUDENT_INFO.classDivision} (Roll: {STUDENT_INFO.rollNo})
+                Made by <strong className="text-[#f1efe8]">{STUDENT_INFO.name}</strong>
               </div>
             </div>
           </div>

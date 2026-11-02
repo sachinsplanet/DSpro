@@ -12,6 +12,7 @@ import {
   Car,
   ShieldAlert,
 } from 'lucide-react';
+import { RevealOnScroll } from './RevealOnScroll';
 
 export const Industries: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<string | null>(null);
@@ -32,32 +33,35 @@ export const Industries: React.FC = () => {
   return (
     <section
       id="industries"
-      className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#f1efe8] text-[#08090d]"
+      className="scroll-mt-16 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#f1efe8] text-[#08090d]"
     >
       <div className="w-full max-w-[1140px] mx-auto">
         {/* Intro */}
-        <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-4 sm:gap-8 items-end mb-10 sm:mb-14">
-          <div>
-            <p className="text-xs font-mono-code text-[#a54f40] tracking-widest uppercase mb-2">
-              04 / Sector adoption
-            </p>
-            <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-[0.9] [text-wrap:balance]">
-              Data Is{' '}
-              <em className="font-serif-display italic font-normal text-[#a54f40]">
-                Everywhere
-              </em>
-            </h2>
-          </div>
+        <RevealOnScroll>
+          <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-4 sm:gap-8 items-end mb-10 sm:mb-14">
+            <div>
+              <p className="text-xs font-mono-code text-[#a54f40] tracking-widest uppercase mb-2">
+                04 / Sector adoption
+              </p>
+              <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-[0.9] [text-wrap:balance]">
+                Data Is{' '}
+                <em className="font-serif-display italic font-normal text-[#a54f40]">
+                  Everywhere
+                </em>
+              </h2>
+            </div>
 
-          <p className="text-sm md:text-base text-[#63656c] leading-relaxed max-w-xl">
-            Every modern industry produces continuous telemetry and behavioral signals. Data Science
-            provides organizations with the statistical rigor and scalable pipelines to transform
-            those signals into decisive business advantage.
-          </p>
-        </div>
+            <p className="text-sm md:text-base text-[#63656c] leading-relaxed max-w-xl">
+              Every modern industry produces continuous telemetry and behavioral signals. Data Science
+              provides organizations with the statistical rigor and scalable pipelines to transform
+              those signals into decisive business advantage.
+            </p>
+          </div>
+        </RevealOnScroll>
 
         {/* 10-Card Responsive Grid (1 col tiny, 2 col mobile/sm, 3 col md, 5 col lg) */}
-        <div className="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        <RevealOnScroll delayMs={100}>
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {INDUSTRIES.map((ind) => {
             const Icon = icons[ind.id] || Laptop;
             const isHovered = hoveredIndex === ind.id;
@@ -116,7 +120,8 @@ export const Industries: React.FC = () => {
               </article>
             );
           })}
-        </div>
+          </div>
+        </RevealOnScroll>
       </div>
     </section>
   );

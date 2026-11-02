@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { STUDENT_INFO } from '../data/content';
-import { ArrowUp, Copy, Check, User, BookOpen, Linkedin } from 'lucide-react';
+import { ArrowUp, Copy, Check, User, BookOpen } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -24,9 +24,7 @@ export const Footer: React.FC = () => {
   };
 
   const handleCopyDetails = () => {
-    const text = `Student Presentation:\nName: ${STUDENT_INFO.name}\nLinkedIn: ${
-      STUDENT_INFO.linkedin || 'https://www.linkedin.com/in/proffesionalsachin/'
-    }\nProject Subject: ${STUDENT_INFO.subject}`;
+    const text = `Student Presentation:\nMade by:\n• Priyanshu Sharma\n• Pawan Sharma\n• Prajwal Reddy\nProject Subject: ${STUDENT_INFO.subject}`;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
         .writeText(text)
@@ -49,7 +47,7 @@ export const Footer: React.FC = () => {
   return (
     <footer
       id="details"
-      className="pt-16 sm:pt-20 md:pt-24 pb-10 sm:pb-12 px-4 sm:px-6 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.15)]"
+      className="scroll-mt-16 pt-16 sm:pt-20 md:pt-24 pb-10 sm:pb-12 px-4 sm:px-6 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.15)]"
     >
       <div className="w-full max-w-[1140px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 sm:gap-12 lg:gap-16 items-start">
@@ -96,30 +94,15 @@ export const Footer: React.FC = () => {
           {/* Right Student Details Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
             <div className="p-4 sm:p-5 rounded-sm border border-[rgba(241,239,232,0.15)] bg-[rgba(255,255,255,0.02)]">
-              <div className="flex items-center gap-2 text-xs font-mono-code text-[#9b9da4] uppercase mb-1.5">
+              <div className="flex items-center gap-2 text-xs font-mono-code text-[#9b9da4] uppercase mb-2">
                 <User className="w-3.5 h-3.5 text-[#d7ff54] shrink-0" />
-                <span>Student Name</span>
+                <span>Made by</span>
               </div>
-              <div className="flex items-center gap-2.5 mt-1">
-                <a
-                  href={STUDENT_INFO.linkedin || 'https://www.linkedin.com/in/proffesionalsachin/'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-[#0077b5]/20 text-[#0a66c2] hover:bg-[#0a66c2] hover:text-white border border-[#0077b5]/40 transition-all duration-200 group/icon shrink-0 shadow-sm"
-                  title="View Sachin Gupta's LinkedIn Profile"
-                  aria-label="View Sachin Gupta's LinkedIn Profile"
-                >
-                  <Linkedin className="w-4 h-4 transition-transform group-hover/icon:scale-110" />
-                </a>
-                <a
-                  href={STUDENT_INFO.linkedin || 'https://www.linkedin.com/in/proffesionalsachin/'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-lg sm:text-xl font-medium text-[#f1efe8] hover:text-[#d7ff54] transition-colors"
-                >
-                  {STUDENT_INFO.name}
-                </a>
-              </div>
+              <ul className="list-disc list-inside space-y-1 text-base sm:text-lg md:text-xl font-medium text-[#f1efe8] marker:text-[#d7ff54]">
+                <li>Priyanshu Sharma</li>
+                <li>Pawan Sharma</li>
+                <li>Prajwal Reddy</li>
+              </ul>
             </div>
 
             <div className="p-4 sm:p-5 rounded-sm border border-[rgba(241,239,232,0.15)] bg-[rgba(255,255,255,0.02)]">

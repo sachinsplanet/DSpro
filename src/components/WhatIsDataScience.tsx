@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CORE_DEFINITION } from '../data/content';
 import { Binary, Sigma, Briefcase, ChevronRight } from 'lucide-react';
+import { RevealOnScroll } from './RevealOnScroll';
 
 export const WhatIsDataScience: React.FC = () => {
   const [selectedForce, setSelectedForce] = useState<number | null>(null);
@@ -10,31 +11,34 @@ export const WhatIsDataScience: React.FC = () => {
   return (
     <section
       id="what"
-      className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.1)]"
+      className="scroll-mt-16 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.1)]"
     >
       <div className="w-full max-w-[1140px] mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-10 sm:mb-14">
-          <div>
-            <p className="text-xs font-mono-code text-[#d7ff54] tracking-widest uppercase mb-2">
-              01 / The field
-            </p>
-            <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-[0.92] [text-wrap:balance]">
-              What Is{' '}
-              <em className="font-serif-display italic font-normal text-[#d7ff54]">
-                Data Science?
-              </em>
-            </h2>
-          </div>
+        <RevealOnScroll>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-10 sm:mb-14">
+            <div>
+              <p className="text-xs font-mono-code text-[#d7ff54] tracking-widest uppercase mb-2">
+                01 / The field
+              </p>
+              <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-[0.92] [text-wrap:balance]">
+                What Is{' '}
+                <em className="font-serif-display italic font-normal text-[#d7ff54]">
+                  Data Science?
+                </em>
+              </h2>
+            </div>
 
-          <p className="text-sm md:text-base text-[#9b9da4] max-w-md md:max-w-sm">
-            An interdisciplinary discipline built at the intersection of mathematical evidence,
-            computational engineering, and context.
-          </p>
-        </div>
+            <p className="text-sm md:text-base text-[#9b9da4] max-w-md md:max-w-sm">
+              An interdisciplinary discipline built at the intersection of mathematical evidence,
+              computational engineering, and context.
+            </p>
+          </div>
+        </RevealOnScroll>
 
         {/* 2-Column Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5 sm:gap-6 items-stretch">
+        <RevealOnScroll delayMs={100}>
+          <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5 sm:gap-6 items-stretch">
           {/* Definition Panel */}
           <article className="min-h-0 sm:min-h-[26rem] p-5 sm:p-8 md:p-10 border border-[rgba(241,239,232,0.15)] bg-gradient-to-br from-[rgba(255,255,255,0.04)] to-[rgba(255,255,255,0.01)] rounded-sm flex flex-col justify-between">
             <div>
@@ -190,6 +194,7 @@ export const WhatIsDataScience: React.FC = () => {
             </div>
           </article>
         </div>
+        </RevealOnScroll>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { CAREER_ROLES } from '../data/content';
 import { Search, ChevronDown, Wrench, Award, Check, X } from 'lucide-react';
+import { RevealOnScroll } from './RevealOnScroll';
 
 interface CareerOpportunitiesProps {
   onSelectRole?: (roleId: string) => void;
@@ -60,12 +61,13 @@ export const CareerOpportunities: React.FC<CareerOpportunitiesProps> = ({ onSele
   return (
     <section
       id="careers"
-      className="min-h-[100svh] py-8 sm:py-10 lg:py-12 px-4 sm:px-6 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.1)] flex items-center"
+      className="scroll-mt-16 min-h-[100svh] py-8 sm:py-10 lg:py-12 px-4 sm:px-6 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.1)] flex items-center"
     >
       <div className="w-full max-w-[1140px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[0.78fr_1.22fr] gap-6 sm:gap-8 lg:gap-12 items-center">
           {/* Left Column */}
-          <div className="w-full">
+          <RevealOnScroll className="w-full">
+            <div>
             <p className="text-xs font-mono-code text-[#d7ff54] tracking-widest uppercase mb-1.5">
               03 / The roles
             </p>
@@ -140,14 +142,16 @@ export const CareerOpportunities: React.FC<CareerOpportunitiesProps> = ({ onSele
                 </button>
               )}
             </div>
-          </div>
+            </div>
+          </RevealOnScroll>
 
           {/* Right Accordion List — Sized to fit all 7 roles + 1 open drawer in a single viewport */}
-          <div
-            ref={listContainerRef}
-            id="careers-accordion-list"
-            className="flex flex-col gap-1.5 sm:gap-2 w-full min-w-0"
-          >
+          <RevealOnScroll delayMs={100} className="w-full min-w-0">
+            <div
+              ref={listContainerRef}
+              id="careers-accordion-list"
+              className="flex flex-col gap-1.5 sm:gap-2 w-full min-w-0"
+            >
             {filteredRoles.map((role) => {
               const isOpen = openId === role.id;
 
@@ -279,7 +283,8 @@ export const CareerOpportunities: React.FC<CareerOpportunitiesProps> = ({ onSele
                 </button>
               </div>
             )}
-          </div>
+            </div>
+          </RevealOnScroll>
         </div>
       </div>
     </section>

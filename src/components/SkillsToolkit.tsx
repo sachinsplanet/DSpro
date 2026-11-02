@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SKILL_ITEMS } from '../data/content';
+import { RevealOnScroll } from './RevealOnScroll';
 
 export const SkillsToolkit: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'core' | 'technical' | 'soft'>(
@@ -15,13 +16,14 @@ export const SkillsToolkit: React.FC = () => {
   return (
     <section
       id="skills"
-      className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#f1efe8] text-[#08090d]"
+      className="scroll-mt-16 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#f1efe8] text-[#08090d]"
     >
       <div className="w-full max-w-[1140px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 sm:gap-12 lg:gap-16 items-center">
           {/* Left Orbital Visual */}
-          <div
-            className="relative min-h-[21rem] min-[400px]:min-h-[24rem] sm:min-h-[30rem] lg:min-h-[32rem] border border-[rgba(8,9,13,0.15)] rounded-sm overflow-hidden flex items-center justify-center p-4 sm:p-6"
+          <RevealOnScroll>
+            <div
+              className="relative min-h-[21rem] min-[400px]:min-h-[24rem] sm:min-h-[30rem] lg:min-h-[32rem] border border-[rgba(8,9,13,0.15)] rounded-sm overflow-hidden flex items-center justify-center p-4 sm:p-6"
             style={{
               background: `
                 radial-gradient(circle at 50% 45%, rgba(215, 255, 84, 0.25), transparent 14rem),
@@ -107,92 +109,95 @@ export const SkillsToolkit: React.FC = () => {
             >
               Communication
             </button>
-          </div>
+            </div>
+          </RevealOnScroll>
 
           {/* Right Skills Grid */}
-          <div>
-            <div className="mb-6 sm:mb-8">
-              <p className="text-xs font-mono-code text-[#a54f40] tracking-widest uppercase mb-2">
-                06 / The toolkit
-              </p>
-              <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl font-medium tracking-tight leading-[0.9] [text-wrap:balance]">
-                Skills to Build a{' '}
-                <em className="font-serif-display italic font-normal text-[#a54f40]">
-                  Career
-                </em>
-              </h2>
+          <RevealOnScroll delayMs={100}>
+            <div>
+              <div className="mb-6 sm:mb-8">
+                <p className="text-xs font-mono-code text-[#a54f40] tracking-widest uppercase mb-2">
+                  06 / The toolkit
+                </p>
+                <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl font-medium tracking-tight leading-[0.9] [text-wrap:balance]">
+                  Skills to Build a{' '}
+                  <em className="font-serif-display italic font-normal text-[#a54f40]">
+                    Career
+                  </em>
+                </h2>
 
-              {/* Category Filter Controls */}
-              <div className="flex flex-wrap gap-2 mt-5 sm:mt-6">
-                {[
-                  { id: 'all', label: 'All 9 Skills' },
-                  { id: 'technical', label: 'Technical' },
-                  { id: 'core', label: 'Mathematical & Core' },
-                  { id: 'soft', label: 'Human & Strategic' },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setSelectedCategory(tab.id as any)}
-                    className={`px-3.5 py-2 min-h-[38px] rounded-full text-xs font-mono-code uppercase tracking-wider transition-colors cursor-pointer whitespace-nowrap ${
-                      selectedCategory === tab.id
-                        ? 'bg-[#08090d] text-[#f1efe8]'
-                        : 'bg-[rgba(8,9,13,0.06)] text-[#63656c] hover:bg-[rgba(8,9,13,0.12)]'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Responsive 1 -> 2 -> 3 Grid of Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {filteredSkills.map((skill) => {
-                const isHighlighted = highlightedSkill === skill.id;
-
-                return (
-                  <article
-                    key={skill.id}
-                    id={`skill-card-${skill.id}`}
-                    onMouseEnter={() => setHighlightedSkill(skill.id)}
-                    onMouseLeave={() => setHighlightedSkill(null)}
-                    onClick={() =>
-                      setHighlightedSkill((prev) => (prev === skill.id ? null : skill.id))
-                    }
-                    className={`min-h-[9.5rem] sm:min-h-[10.5rem] p-4 border rounded-sm flex flex-col justify-between transition-all duration-300 cursor-pointer ${
-                      isHighlighted
-                        ? 'bg-[#08090d] text-[#f1efe8] sm:-translate-y-1 shadow-lg border-[#08090d]'
-                        : 'bg-[rgba(8,9,13,0.035)] text-[#08090d] border-[rgba(8,9,13,0.12)] hover:bg-white'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <strong className="text-base font-semibold tracking-tight leading-snug">
-                        {skill.name}
-                      </strong>
-                      <span
-                        className={`text-[9px] font-mono-code uppercase px-1.5 py-0.5 rounded shrink-0 ${
-                          isHighlighted
-                            ? 'bg-[rgba(215,255,84,0.15)] text-[#d7ff54]'
-                            : 'bg-[rgba(8,9,13,0.06)] text-[#85878c]'
-                        }`}
-                      >
-                        {skill.category}
-                      </span>
-                    </div>
-
-                    <p
-                      className={`text-xs leading-relaxed mt-3 sm:mt-4 ${
-                        isHighlighted ? 'text-[rgba(241,239,232,0.8)]' : 'text-[#65676d]'
+                {/* Category Filter Controls */}
+                <div className="flex flex-wrap gap-2 mt-5 sm:mt-6">
+                  {[
+                    { id: 'all', label: 'All 9 Skills' },
+                    { id: 'technical', label: 'Technical' },
+                    { id: 'core', label: 'Mathematical & Core' },
+                    { id: 'soft', label: 'Human & Strategic' },
+                  ].map((tab) => (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setSelectedCategory(tab.id as any)}
+                      className={`px-3.5 py-2 min-h-[38px] rounded-full text-xs font-mono-code uppercase tracking-wider transition-colors cursor-pointer whitespace-nowrap ${
+                        selectedCategory === tab.id
+                          ? 'bg-[#08090d] text-[#f1efe8]'
+                          : 'bg-[rgba(8,9,13,0.06)] text-[#63656c] hover:bg-[rgba(8,9,13,0.12)]'
                       }`}
                     >
-                      {skill.description}
-                    </p>
-                  </article>
-                );
-              })}
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Responsive 1 -> 2 -> 3 Grid of Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {filteredSkills.map((skill) => {
+                  const isHighlighted = highlightedSkill === skill.id;
+
+                  return (
+                    <article
+                      key={skill.id}
+                      id={`skill-card-${skill.id}`}
+                      onMouseEnter={() => setHighlightedSkill(skill.id)}
+                      onMouseLeave={() => setHighlightedSkill(null)}
+                      onClick={() =>
+                        setHighlightedSkill((prev) => (prev === skill.id ? null : skill.id))
+                      }
+                      className={`min-h-[9.5rem] sm:min-h-[10.5rem] p-4 border rounded-sm flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                        isHighlighted
+                          ? 'bg-[#08090d] text-[#f1efe8] sm:-translate-y-1 shadow-lg border-[#08090d]'
+                          : 'bg-[rgba(8,9,13,0.035)] text-[#08090d] border-[rgba(8,9,13,0.12)] hover:bg-white'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <strong className="text-base font-semibold tracking-tight leading-snug">
+                          {skill.name}
+                        </strong>
+                        <span
+                          className={`text-[9px] font-mono-code uppercase px-1.5 py-0.5 rounded shrink-0 ${
+                            isHighlighted
+                              ? 'bg-[rgba(215,255,84,0.15)] text-[#d7ff54]'
+                              : 'bg-[rgba(8,9,13,0.06)] text-[#85878c]'
+                          }`}
+                        >
+                          {skill.category}
+                        </span>
+                      </div>
+
+                      <p
+                        className={`text-xs leading-relaxed mt-3 sm:mt-4 ${
+                          isHighlighted ? 'text-[rgba(241,239,232,0.8)]' : 'text-[#65676d]'
+                        }`}
+                      >
+                        {skill.description}
+                      </p>
+                    </article>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          </RevealOnScroll>
         </div>
       </div>
     </section>

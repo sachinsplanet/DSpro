@@ -8,6 +8,7 @@ import {
   RefreshCw,
   Zap,
 } from 'lucide-react';
+import { RevealOnScroll } from './RevealOnScroll';
 
 export const WhyImportant: React.FC = () => {
   const [activeCard, setActiveCard] = useState<string | null>(null);
@@ -24,31 +25,34 @@ export const WhyImportant: React.FC = () => {
   return (
     <section
       id="importance"
-      className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#f1efe8] text-[#08090d] relative"
+      className="scroll-mt-16 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#f1efe8] text-[#08090d] relative"
     >
       <div className="w-full max-w-[1140px] mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-10 sm:mb-14">
-          <div>
-            <p className="text-xs font-mono-code text-[#a54f40] tracking-widest uppercase mb-2">
-              02 / The value
-            </p>
-            <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-[0.92] [text-wrap:balance]">
-              Why Is Data Science{' '}
-              <em className="font-serif-display italic font-normal text-[#a54f40]">
-                Important?
-              </em>
-            </h2>
-          </div>
+        <RevealOnScroll>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-10 sm:mb-14">
+            <div>
+              <p className="text-xs font-mono-code text-[#a54f40] tracking-widest uppercase mb-2">
+                02 / The value
+              </p>
+              <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-[0.92] [text-wrap:balance]">
+                Why Is Data Science{' '}
+                <em className="font-serif-display italic font-normal text-[#a54f40]">
+                  Important?
+                </em>
+              </h2>
+            </div>
 
-          <p className="text-sm md:text-base text-[#63656c] max-w-md md:max-w-sm">
-            The discipline connects evidence to high-stakes decisions across nearly every modern
-            enterprise and public institution.
-          </p>
-        </div>
+            <p className="text-sm md:text-base text-[#63656c] max-w-md md:max-w-sm">
+              The discipline connects evidence to high-stakes decisions across nearly every modern
+              enterprise and public institution.
+            </p>
+          </div>
+        </RevealOnScroll>
 
         {/* 3x2 Responsive Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-[rgba(8,9,13,0.15)] border border-[rgba(8,9,13,0.15)] rounded-sm overflow-hidden">
+        <RevealOnScroll delayMs={100}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-[rgba(8,9,13,0.15)] border border-[rgba(8,9,13,0.15)] rounded-sm overflow-hidden">
           {IMPORTANCE_REASONS.map((reason) => {
             const Icon = iconMap[reason.number] || Sparkles;
             const isHovered = activeCard === reason.number;
@@ -125,7 +129,8 @@ export const WhyImportant: React.FC = () => {
               </article>
             );
           })}
-        </div>
+          </div>
+        </RevealOnScroll>
       </div>
     </section>
   );

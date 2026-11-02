@@ -18,6 +18,7 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
   const [isAnimating, setIsAnimating] = useState(false);
   const [viewportTier, setViewportTier] = useState<ViewportTier>('desktop');
   const [internalModalOpen, setInternalModalOpen] = useState(false);
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
 
   // Text crossfade states: 300ms fade-out, text-swap, 350ms fade-in
   const [displayedTitle, setDisplayedTitle] = useState(ROLES[0].title);
@@ -48,10 +49,11 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
     };
   }, []);
 
-  // Preload all 7 images on mount
+  // Preload all 7 images on mount with async decoding
   useEffect(() => {
     ROLES.forEach((role) => {
       const img = new Image();
+      img.decoding = 'async';
       img.src = role.src;
     });
   }, []);
@@ -173,7 +175,7 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
   return (
     <section
       id="dsce-career-explorer"
-      className="relative w-full overflow-hidden select-none"
+      className="scroll-mt-16 relative w-full overflow-hidden select-none"
       style={{
         backgroundColor: activeRole.bg,
         transition: 'background-color 650ms cubic-bezier(0.4, 0, 0.2, 1)',
@@ -330,12 +332,34 @@ export const DSCECareerCarousel: React.FC<DSCECareerCarouselProps> = ({
                   willChange: 'transform, filter, opacity',
                 }}
               >
-                <img
-                  src={role.src}
-                  alt={role.title}
-                  className="w-full h-full object-contain object-bottom select-none pointer-events-none"
-                  draggable={false}
-                />
+                {failedImages[role.id] ? (
+                  <div className="w-full h-full rounded-3xl bg-black/35 backdrop-blur-md border border-white/25 flex flex-col items-center justify-center p-4 text-center select-none pointer-events-none shadow-2xl">
+                    <span className="text-xs font-mono text-[#d7ff54] uppercase tracking-widest mb-2">
+                      0{idx + 1} / ROLE
+                    </span>
+                    <span
+                      className="text-sm sm:text-base font-bold text-white uppercase tracking-tight"
+                      style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                    >
+                      {role.title}
+                    </span>
+                  </div>
+                ) : (
+                  <img
+                    src={role.src}
+                    alt={role.title}
+                    loading="eager"
+                    decoding="async"
+                    onError={() =>
+                      setFailedImages((prev) => ({
+                        ...prev,
+                        [role.id]: true,
+                      }))
+                    }
+                    className="w-full h-full object-contain object-bottom select-none pointer-events-none"
+                    draggable={false}
+                  />
+                )}
               </div>
             );
           })}

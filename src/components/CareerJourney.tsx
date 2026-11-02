@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { JOURNEY_STAGES } from '../data/content';
 import { Compass, BookOpen, Search, Wrench, Rocket, Sparkles } from 'lucide-react';
+import { RevealOnScroll } from './RevealOnScroll';
 
 export const CareerJourney: React.FC = () => {
   const [activeStage, setActiveStage] = useState<number>(0);
@@ -10,31 +11,34 @@ export const CareerJourney: React.FC = () => {
   return (
     <section
       id="journey"
-      className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.1)]"
+      className="scroll-mt-16 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-[#08090d] text-[#f1efe8] border-t border-[rgba(241,239,232,0.1)]"
     >
       <div className="w-full max-w-[1140px] mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-10 sm:mb-16">
-          <div>
-            <p className="text-xs font-mono-code text-[#d7ff54] tracking-widest uppercase mb-2">
-              07 / The path
-            </p>
-            <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-[0.9] [text-wrap:balance]">
-              Career{' '}
-              <em className="font-serif-display italic font-normal text-[#d7ff54]">
-                Journey
-              </em>
-            </h2>
-          </div>
+        <RevealOnScroll>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-10 sm:mb-16">
+            <div>
+              <p className="text-xs font-mono-code text-[#d7ff54] tracking-widest uppercase mb-2">
+                07 / The path
+              </p>
+              <h2 className="text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-[0.9] [text-wrap:balance]">
+                Career{' '}
+                <em className="font-serif-display italic font-normal text-[#d7ff54]">
+                  Journey
+                </em>
+              </h2>
+            </div>
 
-          <p className="text-sm md:text-base text-[#9b9da4] max-w-md md:max-w-sm">
-            A career develops through cumulative mastery: learn the foundations, interrogate real
-            data, build predictive tools, and ship scalable systems.
-          </p>
-        </div>
+            <p className="text-sm md:text-base text-[#9b9da4] max-w-md md:max-w-sm">
+              A career develops through cumulative mastery: learn the foundations, interrogate real
+              data, build predictive tools, and ship scalable systems.
+            </p>
+          </div>
+        </RevealOnScroll>
 
         {/* 5-Stage Responsive Timeline (1 col mobile, 2 col tablet, 5 col desktop) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 lg:gap-0 lg:border-t lg:border-[rgba(215,255,84,0.7)]">
+        <RevealOnScroll delayMs={100}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 lg:gap-0 lg:border-t lg:border-[rgba(215,255,84,0.7)]">
           {JOURNEY_STAGES.map((stage, idx) => {
             const Icon = icons[idx] || Compass;
             const isSelected = activeStage === idx;
@@ -105,7 +109,8 @@ export const CareerJourney: React.FC = () => {
               </div>
             );
           })}
-        </div>
+          </div>
+        </RevealOnScroll>
       </div>
     </section>
   );

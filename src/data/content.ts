@@ -1,11 +1,10 @@
 import { CareerRole, Industry, FutureTrend, SkillItem, JourneyStage, StudentInfo } from '../types';
 
 export const STUDENT_INFO: StudentInfo = {
-  name: 'Sachin Gupta',
+  name: 'Priyanshu Sharma, Pawan Sharma and Prajwal Reddy.',
   classDivision: 'F.Y Bsc Data Science',
   rollNo: '1063',
   subject: 'Data Science',
-  linkedin: 'https://www.linkedin.com/in/proffesionalsachin/',
 };
 
 export const CORE_DEFINITION = {

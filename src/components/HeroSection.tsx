@@ -44,13 +44,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onBeginJourney }) => {
           id="hero-cta-button"
           variant="liquid"
           size="hero"
-          className="liquid-glass rounded-full w-full max-w-[260px] sm:w-auto sm:max-w-none px-8 sm:px-14 py-4 sm:py-5 min-h-[48px] text-sm sm:text-base text-foreground hover:scale-[1.03] cursor-pointer transition-transform duration-200"
+          className="liquid-glass rounded-full w-full max-w-[260px] sm:w-auto sm:max-w-none px-8 sm:px-14 py-4 sm:py-5 min-h-[48px] text-sm sm:text-base text-foreground hover:text-[#d7ff54] hover:scale-[1.03] cursor-pointer transition-all duration-200"
         >
           <a
             href="https://roadmap.sh/ai-data-scientist"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={onBeginJourney}
           >
             Begin Journey
           </a>
